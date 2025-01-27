@@ -4,7 +4,7 @@
 ### 1. Клонировать репозиторий
 Сначала клонируйте проект с помощью Git:
 ```
-git clone https://github.com/yourusername/order_management_system.git
+git clone https://github.com/Yackov2004/Orders-managment.git
 cd order_management_system
 ```
 ### 2. Установить зависимости
