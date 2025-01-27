@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Добавить заказ</title>
+</head>
+
+<body>
+    <h1>Добавить новый заказ</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="table_number">Номер стола:</label>
+        <input type="number" name="table_number" required><br>
+
+        <h3>Блюда:</h3>
+        <div id="items">
+            <div>
+                <input type="text" name="items[]" placeholder="Название блюда" required>
+                <input type="number" name="prices[]" placeholder="Цена" required>
+            </div>
+        </div>
+        <button type="button" onclick="addItem()">Добавить блюдо</button><br><br>
+
+        <button type="submit">Сохранить заказ</button>
+    </form>
+
+    <script>
+        function addItem() {
+            const itemsDiv = document.getElementById('items');
+            const newItemDiv = document.createElement('div');
+            newItemDiv.innerHTML = `
+                <input type="text" name="items[]" placeholder="Название блюда" required>
+                <input type="number" name="prices[]" placeholder="Цена" required>
+            `;
+            itemsDiv.appendChild(newItemDiv);
+        }
+    </script>
+</body>
+
+</html>

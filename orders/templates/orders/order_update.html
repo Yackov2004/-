@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Изменить заказ</title>
+</head>
+
+<body>
+    <h1>Изменить заказ</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="table_number">Номер стола:</label>
+        <input type="number" name="table_number" value="{{ order.table_number }}" required><br>
+
+        <h3>Блюда:</h3>
+        <div id="items">
+            {% for item in order.items %}
+            <div>
+                <input type="text" name="items[]" value="{{ item.name }}" required>
+                <input type="number" name="prices[]" value="{{ item.price }}" required>
+            </div>
+            {% endfor %}
+        </div>
+        <button type="button" onclick="addItem()">Добавить блюдо</button><br><br>
+
+        <label for="status">Статус:</label>
+        <select name="status">
+            <option value="pending" {% if order.status == "pending" %}selected{% endif %}>В ожидании</option>
+            <option value="ready" {% if order.status == "ready" %}selected{% endif %}>Готово</option>
+            <option value="paid" {% if order.status == "paid" %}selected{% endif %}>Оплачено</option>
+        </select><br><br>
+
+        <button type="submit">Сохранить изменения</button>
+    </form>
+
+    <script>
+        function addItem() {
+            const itemsDiv = document.getElementById('items');
+            const newItemDiv = document.createElement('div');
+            newItemDiv.innerHTML = `
+                <input type="text" name="items[]" placeholder="Название блюда" required>
+                <input type="number" name="prices[]" placeholder="Цена" required>
+            `;
+            itemsDiv.appendChild(newItemDiv);
+        }
+    </script>
+</body>
+
+</html>
