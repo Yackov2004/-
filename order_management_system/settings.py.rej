@@ -1,0 +1,8 @@
+diff a/order_management_system/settings.py b/order_management_system/settings.py	(rejected hunks)
+@@ -126,6 +126,3 @@ STATIC_URL = 'static/'
+ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+ 
+ STATIC_URL = 'static/'
+-STATICFILES_DIRS = [
+-    BASE_DIR / "static",
+-]

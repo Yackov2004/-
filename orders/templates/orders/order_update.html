@@ -1,47 +1,69 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Изменить заказ</title>
+    <link rel="stylesheet" href="{% static 'orders/css/style.css' %}">
 </head>
-
 <body>
-    <h1>Изменить заказ</h1>
-    <form method="POST">
-        {% csrf_token %}
-        <label for="table_number">Номер стола:</label>
-        <input type="number" name="table_number" value="{{ order.table_number }}" required><br>
+    <div class="container">
+        <nav class="nav">
+            <a href="{% url 'order_list' %}">Заказы</a>
+            <a href="{% url 'order_create' %}">Новый заказ</a>
+            <a href="{% url 'calculate_revenue' %}">Выручка</a>
+        </nav>
 
-        <h3>Блюда:</h3>
-        <div id="items">
+        <div class="card">
+            <h1>Изменить заказ</h1>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="table_number">Номер стола:</label>
+                    <input type="number" name="table_number" value="{{ order.table_number }}" required>
+                </div>
+
+                <div class="items-container">
+                    <h3>Блюда:</h3>
+                    <div id="items">
             {% for item in order.items %}
-            <div>
+            <div class="item-row">
                 <input type="text" name="items[]" value="{{ item.name }}" required>
-                <input type="number" name="prices[]" value="{{ item.price }}" required>
+                <input type="number" name="prices[]" value="{{ item.price }}" required min="0">
+                <button type="button" onclick="this.parentElement.remove()" class="btn btn-danger">×</button>
             </div>
             {% endfor %}
+                    </div>
+                    <button type="button" class="add-item-btn" onclick="addItem()">+ Добавить блюдо</button>
+                </div>
+
+                <div class="form-group">
+                    <label for="status">Статус:</label>
+                    <select id="status" name="status">
+                        <option value="pending" {% if order.status == 'pending' %}selected{% endif %}>В ожидании</option>
+                        <option value="ready" {% if order.status == 'ready' %}selected{% endif %}>Готово</option>
+                        <option value="paid" {% if order.status == 'paid' %}selected{% endif %}>Оплачено</option>
+                    </select>
+                </div>
+
+                <div class="form-actions">
+                    <a href="{% url 'order_list' %}" class="btn btn-secondary">Отмена</a>
+                    <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+                </div>
+            </form>
         </div>
-        <button type="button" onclick="addItem()">Добавить блюдо</button><br><br>
-
-        <label for="status">Статус:</label>
-        <select name="status">
-            <option value="pending" {% if order.status == "pending" %}selected{% endif %}>В ожидании</option>
-            <option value="ready" {% if order.status == "ready" %}selected{% endif %}>Готово</option>
-            <option value="paid" {% if order.status == "paid" %}selected{% endif %}>Оплачено</option>
-        </select><br><br>
-
-        <button type="submit">Сохранить изменения</button>
-    </form>
+    </div>
 
     <script>
         function addItem() {
             const itemsDiv = document.getElementById('items');
             const newItemDiv = document.createElement('div');
+            newItemDiv.className = 'item-row';
             newItemDiv.innerHTML = `
                 <input type="text" name="items[]" placeholder="Название блюда" required>
-                <input type="number" name="prices[]" placeholder="Цена" required>
+                <input type="number" name="prices[]" placeholder="Цена" required min="0">
+                <button type="button" onclick="this.parentElement.remove()" class="btn btn-danger">×</button>
             `;
             itemsDiv.appendChild(newItemDiv);
         }

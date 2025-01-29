@@ -1,0 +1,1788 @@
+From aeb4eef9e5515d3e151381b94cb2af78ba93ada7 Mon Sep 17 00:00:00 2001
+From: Victoria Karpova <v.karpova@nrc.nl>
+Date: Wed, 29 Jan 2025 18:31:20 +0100
+Subject: [PATCH 1/2] Aider
+
+---
+ .gitignore                                    |  40 ++
+ db.sqlite3                                    | Bin 139264 -> 0 bytes
+ .../__pycache__/__init__.cpython-310.pyc      | Bin 180 -> 0 bytes
+ .../__pycache__/settings.cpython-310.pyc      | Bin 2395 -> 0 bytes
+ .../__pycache__/urls.cpython-310.pyc          | Bin 1034 -> 0 bytes
+ .../__pycache__/wsgi.cpython-310.pyc          | Bin 615 -> 0 bytes
+ order_management_system/settings.py           |   3 -
+ orders/__pycache__/__init__.cpython-310.pyc   | Bin 163 -> 0 bytes
+ orders/__pycache__/admin.cpython-310.pyc      | Bin 555 -> 0 bytes
+ orders/__pycache__/apps.cpython-310.pyc       | Bin 442 -> 0 bytes
+ orders/__pycache__/models.cpython-310.pyc     | Bin 1726 -> 0 bytes
+ .../__pycache__/serializers.cpython-310.pyc   | Bin 628 -> 0 bytes
+ orders/__pycache__/tests.cpython-310.pyc      | Bin 2074 -> 0 bytes
+ orders/__pycache__/urls.cpython-310.pyc       | Bin 720 -> 0 bytes
+ orders/__pycache__/views.cpython-310.pyc      | Bin 2648 -> 0 bytes
+ orders/admin.py                               |   7 +-
+ orders/management/__init__.py                 |   0
+ orders/management/commands/__init__.py        |   0
+ .../management/commands/generate_mock_data.py |  48 +++
+ .../__pycache__/0001_initial.cpython-310.pyc  | Bin 961 -> 0 bytes
+ .../__pycache__/0002_item.cpython-310.pyc     | Bin 757 -> 0 bytes
+ .../__pycache__/__init__.cpython-310.pyc      | Bin 174 -> 0 bytes
+ orders/models.py                              |  14 +-
+ orders/serializers.py                         |  16 +-
+ orders/static/orders/css/style.css            | 381 ++++++++++++++++++
+ orders/templates/orders/order_create.html     |  85 +---
+ orders/templates/orders/order_list.html       |  16 +-
+ orders/templates/orders/order_update.html     |  68 ++--
+ orders/templates/orders/revenue.html          |  21 +-
+ orders/tests/__init__.py                      |   0
+ orders/tests/test_api.py                      |  63 +++
+ orders/tests/test_models.py                   |  33 ++
+ orders/tests/test_views.py                    | 130 ++++++
+ orders/views.py                               |  54 +--
+ 34 files changed, 820 insertions(+), 159 deletions(-)
+ create mode 100644 .gitignore
+ delete mode 100644 db.sqlite3
+ delete mode 100644 order_management_system/__pycache__/__init__.cpython-310.pyc
+ delete mode 100644 order_management_system/__pycache__/settings.cpython-310.pyc
+ delete mode 100644 order_management_system/__pycache__/urls.cpython-310.pyc
+ delete mode 100644 order_management_system/__pycache__/wsgi.cpython-310.pyc
+ delete mode 100644 orders/__pycache__/__init__.cpython-310.pyc
+ delete mode 100644 orders/__pycache__/admin.cpython-310.pyc
+ delete mode 100644 orders/__pycache__/apps.cpython-310.pyc
+ delete mode 100644 orders/__pycache__/models.cpython-310.pyc
+ delete mode 100644 orders/__pycache__/serializers.cpython-310.pyc
+ delete mode 100644 orders/__pycache__/tests.cpython-310.pyc
+ delete mode 100644 orders/__pycache__/urls.cpython-310.pyc
+ delete mode 100644 orders/__pycache__/views.cpython-310.pyc
+ create mode 100644 orders/management/__init__.py
+ create mode 100644 orders/management/commands/__init__.py
+ create mode 100644 orders/management/commands/generate_mock_data.py
+ delete mode 100644 orders/migrations/__pycache__/0001_initial.cpython-310.pyc
+ delete mode 100644 orders/migrations/__pycache__/0002_item.cpython-310.pyc
+ delete mode 100644 orders/migrations/__pycache__/__init__.cpython-310.pyc
+ create mode 100644 orders/static/orders/css/style.css
+ create mode 100644 orders/tests/__init__.py
+ create mode 100644 orders/tests/test_api.py
+ create mode 100644 orders/tests/test_models.py
+ create mode 100644 orders/tests/test_views.py
+
+diff --git a/.gitignore b/.gitignore
+new file mode 100644
+index 0000000..7f24310
+--- /dev/null
++++ b/.gitignore
+@@ -0,0 +1,40 @@
++# Python
++ *.py[cod]
++ __pycache__/
++ *.so
++ .Python
++ env/
++ build/
++ develop-eggs/
++ dist/
++ downloads/
++ eggs/
++ .eggs/
++ lib/
++ lib64/
++ parts/
++ sdist/
++ var/
++ *.egg-info/
++ .installed.cfg
++ *.egg
++
++ # Django
++ *.log
++ *.pot
++ *.pyc
++ db.sqlite3
++ media/
++ staticfiles/
++
++ # Virtual Environment
++ venv/
++ ENV/
++ .env
++
++ # IDE
++ .idea/
++ .vscode/
++ *.swp
++ *.swo
++ .DS_Store
+diff --git a/db.sqlite3 b/db.sqlite3
+deleted file mode 100644
+index 45633823e96acb19fc4ec42073535927d09e9ff2..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 139264
+zcmeI5du$uYeaE>XC5o2Fl^-(CXUkgA)}0wy7I&9VU9NYu&9h}o)LE7vy53>CBv<lE
+ze8?o_#~u2h?7I|6Tc9ZtpwAQq@<$(k^aTV(lA=gaq-oJ6D3YR0lLBpl21${mXpjVG
+z5}-4)OYU+>J))iw+xZIiYIo;1zxmE*W{11KnH8^Inbqr>uw1E@)Vd(MhFl!ydRY)$
+zF4s%se~A2V{=Ap$c$x>~H)q@5YWF4AnV)&Bmm2fmqc%bQd;XDu?+iRQ@Mpd+c)#uY
+zoxV@?u6Tag{k5JS^vrV~bbW3sN4q`Wc<F#QxHic(YI?b#-BUN}x0H>VR#jH2m5ue9
+zv9A}5Lxt?5qH-*fkK~n&vVPlXe(>BvCcT&uu4QMgT+0YE+4Gs3Lda>ggVT^OpY6;P
+z5>ADfFuf2uErggnq9+t?Oz-ywS5jO<wQ69bu4~njUaRSqa!s-JX(f`;d@P@mG^VV>
+z_<&gpyZjELEj-%9cVwYeXwyN&PYij3ZxHcw+le<k5#2daisW<4sqVV>?@D)vvz;V2
+zGZ3|_e1EXvPH~$jb|ts1vPvXhkfm5IV)dL3LPJ~kpAK8AOKwxluIom+RGS-8*^>d%
+zG!t!2V>8KD%5|+=SL*lIHQJ@5<!B<VMRTlaEIYnSn^>vJR$gqnEo<6;92tnrtA20r
+z{sgzlTTNnR=_nvyDQIQ2q$v?m&B=+FYPE)yE3kDlSVp^az3ZBg7HEnKg*R^wdV}dS
+z_wa?fnkyRDDZBdF#u8Dp#ujIa->k%9`s{4RKAt!YDONI&2s&xd6|E{{=NE<Swb@zW
+z)rFb4^um&GIkP0BuPx5cWQohUOm>k-Wlp;0TFAVTS;%D1Wv<!^HOmMK=V|H!lQff^
+zS)57F&MuiJGv_-xVW*}J?-q;Ql@Z>I40wZ+lib6D4z%nFvjH`Z2e-m#BtKU0j4@(&
+zt-@?~iR{69eBR*bDEH2Zc4V#2w{Htbd!n<h)@pYvRnjBxsMY)}wR%dFlHpdjB%P$F
+z*6K>JvZ9wmLP4!-b-kq7)AgEC+aMi-cG8fLt5k~iRC<;U0hWI`V!1azyGbd_dX*Hj
+zwPjPtwia4R)r(e1iI`Oq$xnsW)#c?*kt9XU*Y!I@rBgqxv9emx%Njw{QT?#EuP>Mx
+z<y>qytlch>+ckwW6tO4wH+0Xu!4X@#1Dn}?Z!neO9ww~zHTsfubr}~%$5~&OmhUjy
+zQ#UZYyz8BrP`4^YZ=fE<7}FT)^9IMpxW<|TC}YlQ=G_Y1o?x~2!DMHD4$I!Y;Dxbm
+zyM;mA=of6ipWH>$|E|rGz24x&1oz-)t@>CLS*5JQzAiPhQs0H@#cb6h&FQ=)*uFsv
+zt7>_r()QtPO4|9usrC76jZ6`nmT=>u#~ZB3T;nZvv2`g*QP<a%qMFl+N{QTw6qQ6g
+zSC9*Gj@^cI$<S-UY=5HYVz|9$<1VC2Hd^<VCi-B(WRcsd6}LAi%iQJ$Yw<2QyPWd0
+zw|p0iccJw~J8~k}Qs2E*T6OB49DcQ@k9O@PR!?)htZBD5v~pf^9J<@;=SVz7uffwK
+zXSlJ%d4p3^+@@-0SJGFiYMnlenOv+BJ#BtN9qD_bMz~m?J5sFugQtDGaHf*1MZM$G
+zg^UBkNBv}bXy4ae{HOU3^96n^@Q;CC2%Po*!2faoU4L}&D}x^yygs;p;Ijj754<`s
+zLJaW(0w4eaAOHd&00JNY0#6EoGlzOzM@G{m7Nu2dkw`>RNHC=&MWondM4Xfof+S6g
+z(zGm|NlJ1`mc)a^e%!Jb6}_z2b+u^EB2G*3=}7WSOo~S1N%=spYh*lK(~Nl<Qpi@B
+z<Y_r}CX$TGqIhwCuWR^5nm%_Edr47?buwecLb6uSN-3%Ll%iH%so!!GZ+a4w@#M=x
+z#M6bQCsEm0XVIngYUSR2+YC>wtA|81B__}D#KT<EL&Vf#gc9ge#!fO45@B~CK%87N
+zokUXh3b9z<ZXCr^iInt;pE$bObd<C^YKHxG5)_Y%qI7wX_<5u0Ct>=zqZW0-r&1-s
+zxk5qFs?|zWDUqgASG4Yk;!+|ZrU!_#nWnS2QYBB9dR1%2Am|KAO`+YZE9H13nv9;^
+zM_gQPx`^59Wd%c(@<!3w)r_`|lWvlH*++ad+d2}p`)IMLtk=6&Bo-H=k#qgTL$j?T
+zvfTrVbMAyTCa2=^MK5vE?7ZZXGCHpnAYu{M9X&;oQsQD?uWS55+Km4&jO-$<YNg7Z
+z7G7h9iuRzcc%zAEBtFyI>k1N0g_2$-E@T>9CX-v$`>dU5AhuFgmW%3&lD}2aNnD`2
+zD^ZRo(;niAP&QpjmMc>hxoRuaZC4j^N{mSnH*qoEa<Tn@Ajf1mG1Wtuk{oP6*kJ@A
+z!xYKE5p?5DblaCC#bdFgpZ`6VmoN12U*$i~f1JO=e}MlrzVM_B=+FrQAOHd&00JNY
+z0w4eaAOHd&00NH>fuRBSIA;VM751z5pvOJIIhNT7exG}+pPgjUw!wYwQ6D>`(HvHr
+z{XV;wpxZ5TUDjmuAM9~Y_L~VTZb4%f!<>7nX>F}kIJA#A?&nus{5SZ&<-f>(lK*Xf
+zm4B1}z~e&?N<aVvKmY_l00ck)1V8`;KmY_l;7KCDdyWj7Q2@H?sDH?FBxoM9r+V)p
+z&&W}(xp2t*-FM70euA^Fh_LPV`aQ$LEQ~-S1fGCrILMAz_`rS8Gd#u)t)&<}`#r%C
+z9}5XI7evtY|H8oQF8)jWAM-!Y=lE%UFz~N|KMj01Pz_`QX95TO|Ly;K{~!9__AmNR
+z41Q<u^Mijd_;B#22G0&2ANb#aFAn_qz;6t^NgUt@1V8`;KmY_l00ck)1b)m3920t7
+z-01WDcXaJ8d(+^YS{CSmKpy~vQIdLMqMy7qu8}|KKu^(h<Iu1;Zdj1NnNeP`EQ~{D
+z@$3k(7#Z)UtJj+j$UaLuevG7zg}tnF_Jq+Yo*jjblJxOOuUUS}!W3ZGJZspP3R*U%
+z1a^Gv2(cM`-b*#K45$dh!!yi7A5&pI)U<S%$Ik_cO<3$RmDsFIEls<_hMlR#W@qX#
+z&j`cB?!-hNRb(@wn#{uq@*)T~ndoJzY)@1zW#&17E<&FoZ-H>)3%#a1hq)=SEdzN6
+zgk~^xIx?7A?HR)4{SR&;)=LFDtf^?b=`r$x2chj@%IRZYOENtW$jcj~<{ndOGu_n4
+zEXbP~)WX!(v@k`{!)M7W7o<;lsF-FlRYCWUlh-InpK`O(*<)s_cy<&bZ$^+l<u=Q2
+zS(pM08}jM{wJ{a6Y)lF4_!xP$fz;AXHM9(<2zGFaytcqi$URJj^>o{kVx2neC6-f(
+z9#fB%Ky6J?*2&Z4{R3)kDzg%(wJFa!`5bx2fb`lPs?j=2O{q}p%t`VBf$w>diETc0
+zx1^F20(&vx6nRI$HxV<1+U-o4mL+*NfLNL$?Uts*mSu>%6yO`5q5|z^R9?%5&i@Pk
+z54renlG*>iA~As9<lp8?{0;sBALYmRA)X6-Gw|iW-vvGv_^rU(fpXyWz=ePm7!C0L
+z@B6>%|0n-v{2%jwlsLc-2!H?xfB*=900@8p2!H?xfWQw=fcJ2toE0___ItP!oIOx9
+zYMe2j0cqstc)-JraIHYl$dHE{<7}~?V+TCkIM){JIcl6Tov>)lv#ew*lyiicv;}XT
+zIppEOoFi5fG)|hX%pl8QCej{-89wacCb^EN%b{mHoXB;FuN*WIOt-ek$bn%GH^DjM
+zCHt9rD>O311lWTiym7{KNFy2n#;q0X@H1|<_{Jb3&=$}bFix3HSVUqUE7=NH_?SLt
+zfTBO>;ikCGV1(B=Z#uLh2YrmHBf!vmz~g(KYl|j$4tabNoFjDLW+zRb&By<qA&+mI
+zEC8?q0(AbL<IlRtKm33I2!H?xfB*=900@8p2!H?xfB*<=Nucop=XW(;O#7z%Q$AnX
+zzn)twEK5r5mMX>KCzA>C_Xi^<<HgGCt83(MW6ouCZ6=Y`S643ITRS-`-ipoZ+2rDt
+zH_y#qdM&NLrX{ZB<2S3fmhME-=T{30OWMMv=!Lbbkr&(lzMw2li>WiQWK>Fu<jebN
+zx9XZ!eVKka&6(;(#|cN?$g~(cBg$f2mg)RI$N!g${PS*EMI?X#2!H?xfB*=900@8p
+z2!H?xfB*<QDFhC=r+gie0XqNh8hTQy0G%KJ0w4eaAOHd&00JNY0w4eaAOHe;A;8xE
+z2fpMY|L_9>AOHd&00JNY0w4eaAOHd&00K`Wfz2_lckaQJbhV=0iPY~DRIwOct=+n%
+zmsaz!l6+f_mh%-&Up=E;x_5mwlbOG(r>`t%$~kF0JzrT(Z^$=m7v@&y)7R6Hwe{<f
+z*Ah}ZSGasJr=${z+`a3S(zW`Mwq8AVA$$FmmBnf@xAx}!#f#U@C$C);<?7YQ{91A~
+z9+4O3C*`<Ux)i^8b6HNr&t938?qug~Tw7Z@zm}b?)>qSO=kzx(#ji+bZ_lP<sk3J<
+z$=OojR$?xbyK*C$zj04ZF5IpqZ=R3NMay@m#d`k6t;Om5jqJ*6lQUN@tFeXn%q#1Y
+ziFk6RQd_yckzBjGkkYD|=v_5FcO!naW~~30CdG&#iPOz@2V!DeGS>fpiTwS47v04V
+z2!H?xfB*=900@8p2!H?xfB*=9z!OH`gnQ1nQ|trl|DUi%g<KE-0T2KI5C8!X009sH
+z0T2KI5ZD6&Jpb<j8nS=@2!H?xfB*=900@8p2!H?xfWQ+*fG+wM_>7DHKL1_*fB3KS
+zU*Z3a{}=uX{Ac;k@PEmFlK&Y0NBr;eALT#7|0@40{4etF;~V^2{03j)bw1C(!QbGo
+z@Rx}L{D1%mfB*=900@8p2!H?xfB*=9z|&5k*UfSL0^5$V?Qympp<C}Uwmr(W&$8_i
+zy6t<0ZG&ukm~DsYw)YU*9%S1CY`dRsJwt5Evu%KF{dDUdWZMC@-N&{*y6x#_TQA%8
+zv2Cx%?c+Rj<EEP)x7+8#{QuM5IZ;0l009sH0T2KI5C8!X009sH0T6H*fAkOE|A(#s
+z0w4eaAOHd&00JNY0w4eaAOHeSH39ZV|MC3)RJSoI2Ld1f0w4eaAOHd&00JNY0w4ea
+zc>YHp009sH0T2KI5C8!X009sH0T2Lzr=I|x|DXOgMh!s#1V8`;KmY_l00ck)1V8`;
+zKmgDG=mQ`C0w4eaAOHd&00JNY0w4eaAn^1P@O!`Q;<-<|_>+Nu@O`20Q~tYy@9#U*
+zd&Bdgf$#cW>dy?k*ZtSrr+enP54t|*deOmS;2V8!2j?fbhNzbd+C6oneoNV?X;o#V
+zTG?2y8T)!ciL0Wd6_Pop!J%^tne<{tn8}{c+!R92<c|CyVLsbw77|W{SgCp;6mGn9
+zz#Cj6l4{#aVhR<aEftkxk$fbtY?SreP6Y=|f!DG#SFY`>v%AxsRi73@&8(yb)BC-_
+zl@!-dtr{4q>sqy>*J^sDTvM!lT8ZR?pE>FcPEK;~o2sk1qE=W{%PSQ{EtK@KQmm{v
+zkB^)6T1=mv%?Kf9G9^l23VOM&t!PytJHIGoug%U1uP)5Yr5Bcj%b6u1eQj}mCQBU6
+zWwMK;29?~Zmah{vA)&6_tFsK&>8iF~4GDMDYW|j5JtajV;g(loq~`0SR?2cwT?q-b
+zl3Fa1qJ@oeO<yT%g_fmo?qcTLWg@Q4{wH1(B4Of$crLGKN=d8L)D^9%!jw+aE2KK*
+zx>CQtt}&Ud>d~q#WM0WEWU}WnS6e*n8B8Q$;XJilVBBW1GmA6n+1VxYWad06rP&iZ
+z;n_=Qb+ldkHLG0LOQdQAwXV^<7MXD4QqUW$q`AgztJg3oY-9BnXU`FrbGg{Ely3<#
+zE;?I=XScdYcj?*L{hiq;0joILFh8yraWo&xrzDLvMaLC?pi47!7&(Up)1$2kI<j=b
+zKQZJDzClKyIjb*q<TJ*2I{4&7DU#1Er@HIjzboB_dz-VJBsVjJ!kdu+HuOC_$c8?v
+zBQukl^LWtIV-9`JWb=CLyn44A`dF9lI$-|)uK89aJLPmZX12Q<O~M1uxn2#9j&kpu
+zXh+t9v2P1VThM9T9qtb{d}(fT%IYx;it}P`eWbTt@roE#<GHvjIX;A)xt}p*ZS`^N
+zwBJo>wvN_SF|9I7Ani+r_cq;Rq&j%W8@xhpH)4*88=cR(NK%PdEES7JTZqkjq{Ce<
+z4_4e(4xD-oJF1fHvGH>=+wTpgQryFY)xJimCEvI(I?npKw0wur7TsX``-7IecegWl
+zw8<{qTNKQi?C`N3CilIEgJWY{W6ch<kv!}T=E-O7lB4mr?1yS9rl|$db|dUGJ+f7Q
+za2mGycGIV`V>mO|J94-&bkO^_-MO#wWDs$uxXlw5&W^5UT~Sse(hs3Xz937nT*Mkd
+zI<gLJJ$iK5?y49Y@eT)V7i32t4R78Y^aj&u?%@kohhh!pY&C1VaHjaXT&Z1M?CEM{
+zo*uzRT3f4idBW)UT(dIl@>+ehr!P1$!7VYcwcAC#t|>L`_J&r@YmP&A8$w6osj^zq
+zPLrJB#uDcZPEB!}D)VVREtT|@s!AVQY8@wf+Wa;judEDvY7upP-Sz+#i?uyKQLS62
+zlB`8tBM)Ys&kdOWcf>Ss2m&Ag0w4eaAOHd&00JNY0w4eaPay%n`+{r8^)1)F_xgUf
+z|I7Uc`o2bH|4Ti8;$Cw9MbFQ1@9#P1`c~jS0x6^F?kkTE0`~>(6TxtpduNhGWy;!J
+zMQKIL+K;?#@tDRT(Hp!P<{Bv$XEdWXH8O2X=b*KF>v~mFXrx3@WBIrgkIU^Qg6Yj%
+zwa}i}HNO!kY&WDaAX`~vDj`1QrS;i--X3K#WwqyZOwY6@Qpe58tZDbHs8G~4=Wd_L
+zC(+5KJ*l<YIdN{6*(HSZLZmM^ALd+)rWr&d4N+moO1n5kY(E|l&-4W|qg!QewWlJs
+zcKaLqC%h~eUt*wG0*k*|dwg4i8w*RA$(|x_?ZGuMX6I;3MTOnJ<T`L=f>xtX?qk=8
+ze7Y}qVQkxq89`&CW^8|S-&b7HZfHD+PO`r8&WQ)_A$!|R<+b;HYmLpGNUW>1+TBW(
+zL=u}TIYcSh7KkjWwK`pKqL=N_MzX+y^fJAs)HX;wm&TSuLatINw$?9@RC;!2(!`Jz
+zv5h4$(Mqabv_wj=Xq!kXq^>S6cZwh>bfLu^5=?dKV<W;U>D65Wsie?ly-Mo7jj(Xz
+zWQa_xPqa;}Tk&nhzTSk+X-Lb_L|ls+vqhF&!0g=iRZ~{#mR@YL6_z#a1&(6LNOX0~
+z8@xZkZSvMcjFqLMfPAH((ON4JQO(JTm}<?zSh@O4(Osr)Eu&q!-gQk#qcp{lbpqpp
+zmre{k<g8)CDw>TQ)?sg#0mMq()3xKoy!||-IZWC!nWgS9S81=ab(K2STeWvm$v&A7
+zZd@ECD~V*T@s|DL(Jn+G^9f2(&1prYMB2WnB;vV(T#$3D;kzjJbZz`DhTD5?`xvzg
+zqGVc{=qx>xMLP1#ac@wTxy_XQBh{X>i-wW*rtf00r{=fxZP_Y@>h8&8#&*O$V{6K4
+zt?+A22j^q)sFqXXPJ?4+wc77mw$9%MyJbeJ-kcf?H%=Y%1{JdS;flSdv}`-C=4dXj
+zCAFMW+R+`P*&B?Gi+R(}))E~#LSzEpy@2(RSReV6tdD#Q7M?Vom%YIgC%DaFHnx(R
+zLaka;$YguTwi{|6OYJFSAnCfiV7qm8+k9-1L4Uof=jqy5Ew7Um#I0M)@aD6UH#k1d
+zJ-BOE%Cwk**srm!T3OPb27FeSQr;-#=-qB>t+BNpnX;-mp0=7RoKIc4I-gapr)Ou*
+z6Hd%9EX*&EduSum%vH9&I!xC+*DH0ksBBStl1^@Q>l>t?)-Aj3`6Z0`|Hmhy0VN;+
+z0w4eaAOHd&00JNY0w4eaAn>RN;Q9Yik%eCn009sH0T2KI5C8!X009sH0T6h62;lku
+z@o5Vv0Ra#I0T2KI5C8!X009sH0T2LzM@0b7|Bs3+{DJ@ofB*=900@8p2!H?xfB*=9
+zz~e&z&;O54TR;g2fB*=900@8p2!H?xfB*=900=xP0)FDSpVwXd*ZF_u|Azkr{}KNE
+z{C#o)KOg`CAOHd&00JNY0w4eaAOHd&00KWefk3~<b!6E1!U6h6{CO`q4jRX7d$7;r
+z8aZly6I;#veYDr(8b4uvok{)vx>mF84|+VV;bHpCMf59K{BCj-q(|(##18b3!!dej
+zeQ(iz&f^M>urFvKU(uzN>(%@8`Ja3NAbvmq1V8`;KmY_l00ck)1V8`;KmY`uVgk1H
+z|NK*2O;im8KmY_l00ck)1V8`;KmY_l00e%l3DD<%j{kQT`G+46009sH0T2KI5C8!X
+z009sH0T2LzCzim7JMEJqQfx9JO^Ojg5~pQxT1=gZC1YY-@(2FY<?$C>fzy1&U*KPQ
+zVyg+^AOHd&00JNY0w4eaAOHd&@S`TsxY%f9JYE;K`Bu;H$)9{HR8~t`Xj%w~q8K_Y
+zgx0Hio*qk*bSCoCrv=L(`uavBDywuGjT`&+3{hE*I&v^m*_I*2vazk<BFa)_)$T}i
+zc#$M~DpmEy{?D$fdZCfvXgw4zc*s@{R>U&fCat1P#SyzJ(OE;5DbKbV%Nk?*h8xK^
+zZ+DP#C}nv>!;Wn`>h;Fqs-_n1lTNTil>2&yd-kS073o%V^z}2neJ*a!cXYt!_U>|R
+z*{+)MePdlK7xeN<BjBb8{XN5jwj7SGKn@+Hk<MZF*x6TPS+*OHLx+d9zQz>w{5ow@
+jy#N2B9w1OY2!H?xfB*=900@8p2!H?xfB*<QdIJ9kn5C&R
+
+diff --git a/order_management_system/__pycache__/__init__.cpython-310.pyc b/order_management_system/__pycache__/__init__.cpython-310.pyc
+deleted file mode 100644
+index f9215fa1aee0d7f432594e6f6be94752f386e72c..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 180
+zcmd1j<>g`kfgjV;LDXXqfeaXd90wpSW&si@48aVVjD9N_ia^2$;#atSXmM&$v3_E9
+zepy<6QE^FXYLUK6YH@Z+et~{|QA%o2d~RZ1VtQ(BYF<fvaV1beE>7|I_{_Y_lK6PN
+Yg34PQHo5sJr8%i~APb9`fCLKz0Mqv`qW}N^
+
+diff --git a/order_management_system/__pycache__/settings.cpython-310.pyc b/order_management_system/__pycache__/settings.cpython-310.pyc
+deleted file mode 100644
+index 0fadafd4874da379c156476574b098f1e90649e4..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 2395
+zcmb7GTXWk)6qXdlR@^vElip~6Q3o=uDUnIr6v~uR#ZppJ-zJh9(2GX)uANPEakZ<Y
+z(JOy~hdw~xnBf=cl_&lH4-7*&lI_IfG((WB)#_ZnbM{<z6%>mF4z8yQKlL|?9QS+r
+zGI{0T<r&=cHy99SafnBP%X@+)@EjKK%#Zxf;xF9(?Eb8kLo-$$iI&vothqjiX5aEw
+z0iHQ{UP5_m9!WTd=2o~qk3^JmF1_UmkLKTqecmdfqP2h)&}EQWT;b4_Hv-|U%V-HL
+zgUk}TnvK`8@jBuAqP2)_SXa<ZYYA*F!+jNfU|mDEtm|mS;7T7lPk4?iX#0-e4`hlN
+zBYvOCy&#l>5aH1F9N+0<5Btof$CP1D9)!U@?lPrN*v38%9fpzIIhOCB3}ekf9`R+$
+zoREzq@5m7aRC#1%Ls?fgKzj>pctMC|;)6NQVI=Tn__I9%4iFcA4*uZ69%BRgb-9d!
+zE>(s$#vXJ7uZ;aN0G3%WAYED>FQ7bxXM0%gMXoEmgfcnkoi5Pv5g5WGln)&@!u0>x
+z3UP13&>xU;uEZx|%VB%*<|qopr??x1c<u1P7o|@hZ(w)Te|Y=;Uhk7fbagel_b?7h
+zoz;E!_EBm5pmU54AKzcU{p@w=wf~J-lH#jF7^NHdEF>Kz3u?SPO^v|f$`mnGfo!qk
+z0jBYdDJI2~LYU7oJYYbcX?$y1gF#}tX*#Ht%SwV;3n8Y=?uCwrkAm=^l#ka&S{^~j
+z#Yawvm2CZl9V<o}2$<AQc=5w&BO|wz34LQoo6stqH3Ajj1-??r9{(Xq!=6%s;U&RG
+z6QW;E`QkuOC;d?29pXv4S%FR{PA_5{!b#=&Fsu_=kKVHgmvj&Io$diNiSqqc8rJ3@
+z?FKrb_u)D1s6?Sl<MId<`g7nyM=BkF!#)~!jG|@DX^z-5nHx(|YbmRk*UW~t>Vm&P
+zNK0aTcN+1ml!9<4>c^j5Kr+OypvhQ#ZzOwC*J-fdgPbNIelR6`65#hJjCmz7$#1Ha
+z7kWdpM6J4GSd!Xm+376FH(O@4*)Za}=f(1f_KD&Q29S^}+esebo)fw3q%BbAG_>@U
+zOBj9-7l1gLmxLszH@2${JrNsfT@NML9OCCw3&~1s;7|(PgKXG<2+GVUZHhycr5ztJ
+zY!HvQPTDyyhY~>;KfNeYo%qCyyc+iVZ0}V6+l%TCJE}GE@f6_MMFAR-heOgmi!h7*
+zwTN0XZL<>R;h2EVD#ss<U?GxTfUrxIP11+X3$_S$QKNJt$=f!Z0Jfdv2e8k&q!S7d
+z+C;MLbZ<)Ouqg%ZAx?4w*nWIwNt>#nr<qR*hF;mxP5XuZLo%!Bo9*qSsMc!DU0t)E
+zHx1KB7OD-y1QHOST#TepuWDLN-&J??WPYdFH0}0It<r34C3B`;Z`D*&H<HC&W4oHl
+z*QymYt*m5DQ%yBBYa}<-w)xy{sfMxJ+|lfpYOM;)CX`{ZrZ%?Q>b7oInwk!P)w*t5
+zO(+?u4Gve=ziK48bY@!Mxe3UX)Oxa{>04^MX4-(<w705yP5YG#KZYn|!(Y4Qw0vmU
+zIS3BnK!vj!hh+`Z12`MY=T!W;^zlKe42~1&3FIVl@l*Ix;OKWSh}``A;*6LVXGB4o
+smFC5QAWFQzOM>uD{9Ak{E(&>p&++0vFfRg4oVfoKmqj7_<)qnv0aJiFMF0Q*
+
+diff --git a/order_management_system/__pycache__/urls.cpython-310.pyc b/order_management_system/__pycache__/urls.cpython-310.pyc
+deleted file mode 100644
+index 8c288a8a44d526c317ea82e5b6a67c14d412209f..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 1034
+zcmb7DL2uJA6n4^dEop}kzreRP(ug%AE)^gUFfj>nVC>RM=EbjRy4a3vcd%V|;lvgG
+z0)Hu2PW%NB63=NWRY;S-QY`1``Fr2@y=T3@9}`?(e|;%F^$7Xye|A?Nf1crI{U*qq
+zh(Lr@Aj5eW_;au7$!H$Q{=6R$h(rY8YHu~T3Gv*AzSz47Zo(p*55?ewBt!l=BqTn4
+z_lD+LEy`kTxGS}y3vH-20!${k;sr=hF0)tGfuyz3E680M$M2Uw&(@}@xpQEYJ)>1=
+z9W{FGz*0oD)M<KI!UvnuBZQRN04)`w%T1lS0&am?fLTm&EuE|Fj4`2en~D`zh2ECS
+zwPc{!qx6tDU6;9KKAB;8%i>obxkM~Gi;vbSZzZ&4ThPOlJ{N*=MN3(0<7SjDjFwbh
+zWxTGt;D%<K|FFyV3cP?Fg?JUkE~k^pL8oh}B^*%2B|Mq<^CXF1RNUGJ=O|3<px(wp
+zyCvF;MADY=md<O$`X4qvKjk*_Ak*Y8M#n0z)}mAen$Xts(tO9a{v5Z)P^5zG@wqTf
+z=%TZ7wy|r|j?^2zCE4X3w5I$s+w)2n3=P~?n)pDAJ4urG2M#t#f~L=fEL9RVk$1cq
+zblKN?ZJagadely+ZEwC!?lgle!@0?_`Q45xDs-kiH#p;@8SU^l__T<Ld^obDgC_E-
+zn$b?DzY#O?Nq+lz!cHw1%lL)9#Nowf0EWE;dx4Y4Zh0rS#(k-@zG{Y#r55W7o(5RL
+Sj&X~~`2M|M+#83(-+urlg-0#`
+
+diff --git a/order_management_system/__pycache__/wsgi.cpython-310.pyc b/order_management_system/__pycache__/wsgi.cpython-310.pyc
+deleted file mode 100644
+index 537e37b7905c6cc27cd30fbbb8925553d929c675..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 615
+zcmZ{iF>ezw6vur|+LVJL2GrSWBsjysf)JuoN)*(l!?i-n;+XTx#i`HlWV<Qp+7H1B
+zQ`N6@D+A&iASQf?kg~**pZ%WY_kR9A<KbaS+VSUGd7lvSbM0)IZrp!})4z&FkqJ?W
+zq9&OnaqSpdbtavJK(gq5-&0++_k%{Sb4Mooisq!hfBP%_oDWB=Ks(bVo1tUq6gW{y
+zD@&-r2H{seK*ef@3n)UCrlY{%YmFW}3v*zb1kxD!#Q>9@Nmik{Ht^EG5)4~Pr`JbT
+zR-o8)D(l+lLI#a?I*s{0#;O%MVA@82YJI@a#^l<wnKtl(d4O~tLhavjuCVZ#T1Z>s
+zf2IN}4wk>kUh_HL1mp^8gR2&w-}qAV^mmkpjQdIRyo4aynApN-js~BO$HQ}xpIlsw
+z#=~5koewTgPi}Xqk$DI~+tT-YO;3o3Bt%2eH_tX;SrOlpwPhTQg_|DOrFLkWG+tCN
+zlh-CRkGBXOh-(|YHh*(|>A`s}uW%U^iSmQv1MpV?YrdmDJL4@xR<D|acbl%fkKc&+
+Pwpf=OJbFT((v<!K>`TVg
+
+diff --git a/order_management_system/settings.py b/order_management_system/settings.py
+index 6dc1498..27d1fc8 100644
+--- a/order_management_system/settings.py
++++ b/order_management_system/settings.py
+@@ -126,6 +126,3 @@ STATIC_URL = 'static/'
+ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+ 
+ STATIC_URL = 'static/'
+-STATICFILES_DIRS = [
+-    BASE_DIR / "static",
+-]
+diff --git a/orders/__pycache__/__init__.cpython-310.pyc b/orders/__pycache__/__init__.cpython-310.pyc
+deleted file mode 100644
+index 192c101ee7075caf79f67593632caa7d688b75f1..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 163
+zcmd1j<>g`k0;M0*(?RrO5P=LBfgA@QE@lA|DGb33nv8xc8Hzx{2;!HUerR!OQL%nv
+zc79n}eo=8rYHE?bOKNd;Nq&KTeo;zlQG9M<USfJ`Zfaghd~qdEK`unRSU)~KGcU6w
+bK3=b&@)n0pZhlH>PO2Tq{9+~`!NLFlpV26%
+
+diff --git a/orders/__pycache__/admin.cpython-310.pyc b/orders/__pycache__/admin.cpython-310.pyc
+deleted file mode 100644
+index efbdd479ac9787bfe0b3c25b1eccf5e0fea25dae..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 555
+zcmYjOy>1jS5ccffEtfq6U0z|ET$>_7iGoB$C=iVs%Xc$(Y+|nu+lO>@cn4Z2k$57v
+zRC$FoFy4zqMw%Ia^YeMec8kSau>5}fzWvMoPX^DWW^l<G&e@<qFv5Za5LjSo3R}t&
+z1i_Dr%AfE~V1@NJfi=NxeP7;#Y_Rz#`q=|_iyl&~(GKGSJfROB$**(nx#a96YdB>?
+zLIMg|AjlF6Sz#$_teCS-^QrwRGxk*~225SlD?@7B+ZFkA5?$0r?fkH&)P$(xKJ?&U
+zFe|$myPLjAtx}`5q*R(KWgYIBK&4KpFMDmCGMyPhR5*m4(T8+0q0L|-U$O|K{ra=o
+z3}i6;68;tQPUi7?`6-YOOMU0QZk!L1$S>bgxQlMLba{1U^{BUGX^biyxWFFc+>^ID
+z+Z}xVfUKcq(~7F7poJ-V)6e8fyw&5@ovqy%{jl-{7o~=`AQOC*LF;MD!}Fx`_c=U0
+c*VO-i(&Op%RDN-Mf;agSraL>)L0g`}KY|;OZvX%Q
+
+diff --git a/orders/__pycache__/apps.cpython-310.pyc b/orders/__pycache__/apps.cpython-310.pyc
+deleted file mode 100644
+index aad9b484b5d146d894e4211b05099c6a7c6d6c09..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 442
+zcmYjNy-ve05VqsA3T?Weu1JV2OY#B;wFSXe2E>xZGMp2ICULM6q_V;Tu<;CiC9h1p
+z0b=5uRH7%{`F_6p?tE%Cn-G+<pU?aQ-!B&&ijTnp)tsUM0<<I*O(`We1Uz8x1em06
+zEcL*@Bhly^Q6!@FXxTKEs?Li1(Pa*WVz59pb2O5q6bN?Hl!2G}z>vka;jIR#&A{+_
+z0#BmORSXYtr9hS@UKRPWYt?ljOR!_rgV)i>2AtQTlAPNK=ZNh}=ZBm>ccR=^jzMOk
+zD_bs*foDC1?`k`u-7R|ayGrg2ZjgwLddZYFt&}>sl4jGYCg}(AO4K5km8@HCwg{+(
+zJoYq=iJPrv$mZ^6#%KcK(}4E5b;Rs+|0jplo*V1X{|gM>6mvE>AAWM-E@vEJNapMh
+DvK()Z
+
+diff --git a/orders/__pycache__/models.cpython-310.pyc b/orders/__pycache__/models.cpython-310.pyc
+deleted file mode 100644
+index 8622e0bead733d4e9e671d59d577300d8b5377cd..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 1726
+zcmZuyOK%)S5bmDG?yNnw!GJ{&gb^qrb70K@ak8u+n}?BDAM9`#35~|v?eW^Pk95yO
+zv1O$AAt4SC5*$F{A)8xnCM3k*upGJeUi-?)e}PL<)ni9?@JL<VU0q#O{ncZ-BO^lu
+zzJHwW)At-g{>9DN4|wDn4EZh)Mi|XVn?{t9j|j7vy-S$Q>8iD3M>cRA<^sn(;W(_a
+zK*H)V+$15@m3Ei$Og3?Q_H$u#4Tf9<!bwCKiL4Y%{X!#~JA3Xvi7GHxVfMJQT0_HV
+z>W&=^!G4%o+-4P4g}u)_R@)`f2peL<Fpn}HTo}>rykJ~}c4+Bpk9SzBlNK+4IrUAT
+z`s#OesP3x+^%u;CAmR$1u=T=6fp1lRunjWzR6n#Lr<b%?@f;rfto~L<>R|AtdH@&u
+z$B5&x1tf)GzR=b~?c`R>T4^hndX({ItDR(VFH4$S>MG;QNs;9OF+P>ecqh$QbhWwC
+zZGn(Ltxa0$GZfcV7&9>BWgv`hl2!5pgac*@v%N|7tbO48gz!6!Vi=^<cksSHVLS}X
+zKDes(&AX0*4JQoV4!{Ac#k8L%OBs(lMSF>hXguY4Eb}BUB)md`<Lh^+b|lZ1?-KDm
+z=>2bY^19?gP9|&Jo6B7xbI!%&ESGC}w>Q~E)Z=#2NmAbC9niH70_~D7C(DGW_ttea
+z1~Vd#QKdu>FVl??6SMls$^SsGLCS#e1}t)bfmyo*A($mQbO%6*0gyd=pHP4Vfhg8M
+zQ2nSLn0Ma~Amm4buLHp3p5Z)#U~a2J4Cr7Bu<EPdR6iKp2KJU=ZmR>#mR|>7LCF6I
+zfQyN7s2)Lz;QBC74^L562laCv<D1Z9iQ{D;Tj1;G)i3BKr28fE8F+caVif#@^y>+T
+zeZ$}jTdV$#c3J?NVU%PXH0at?$~*j4PfSmsR!k%7_5|6uS_0QhvSyJbIgj&ho@Di@
+ztP3nTU4MG55jxtIMO(Y5Ug}{Z7#s5t<>V$8W1#d|yJOF2e(}`$gyqwXmoBv42*<P+
+z$DO3j<5&;HF~q)rM2oc_$2W>3D^H@)g~j(5uP?+iAJ5Ote6S!8H|@`La-MSWVT)%>
+zj3TS{$-;c2++Q*xvt@CWtXGW4%t}&T(UmfX1(v*c6$vKV8G?8Uj1Pin;^PsIdag$u
+zTA`K4j)l~-ecMPiLF(N1v`yB5ecHpgz3O0E-l35T>&i*jvZ5+>E9g!h^B~|g?aTrE
+z$B*G^NCj4_s35^I4=v&0x(4K2LSY}kVM+kSu?v7U+JIK;AetA&&LDtY!xUMCZun^W
+zw8k1?O}qw&0wu)jNDzPVCX%<1V66#^cM0W1C|-e6#9yM{9`WfY^(}$iM(FAqTTMD?
+nx6YQz(7K=EPr-m{WX{CIC^w1jO_kX)jSrUiSf7mB6BADWiT2EA
+
+diff --git a/orders/__pycache__/serializers.cpython-310.pyc b/orders/__pycache__/serializers.cpython-310.pyc
+deleted file mode 100644
+index f6417d7d9ff06b9c523e026776aaf28e2ca0fa01..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 628
+zcmZuuOHRWu5FN)!8cIJBs#tJ?Y?=!o)CCe^QCL)LvaurUR;5l;>=e{WtjZy{0$1`D
+zvFH_8F_TC%0xZqb%=7ro$3?f>20WkLx7iB=_@JP9d<;ftc8DNBG7ULP83XA_uDzV6
+zoWT`HUk0xr1H~Tv9Zv%pP9SdW@eRbx9b0AQnVxTzv3smSTySfoGWV3xJRE}&nmt2M
+zkTMCWhx$x<sPFB(luM4<zUx;4lON?jQdFpt8Z@L7PkqU-K@UavcJNDNI96rmT0&%6
+z3vm;NE)rsy<w^+G79ua?T9e-q;&Gkn`o_?bT!5EKyKp*JTH1Fo9b_x`x=!wJ12)MP
+z#nZGfwp7X_m&z{6VwDuM2a#vXY^HLxEQQ@*LSFMWX{>Iz+BlyY3{lw<MBuZCnI5_~
+zv2R*bF(No3Ao|cn?RAL@5XdYw9>EE#7@D?clr6>7;Ka{`Sr`u!Tv$zJ>oNOd8uPIB
+X>gj(~Ty$Qq>w-R_YPSO&cFMm2LeY;<
+
+diff --git a/orders/__pycache__/tests.cpython-310.pyc b/orders/__pycache__/tests.cpython-310.pyc
+deleted file mode 100644
+index 2bba6393489b8f539d9697d3c2c602dbcd84a129..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 2074
+zcma)7OK%)S5bmD$KI|+egrEdrNB}LM_2Z19l}v<kStQ;JhtYVtvzg62mhN7gSQ`n+
+zxdz0I0|)z<J2xbLgSqyV1M&~x!Ud|j*K2!YBWBgrT|Hej)!$cDTQ4m&2|PdhKMijM
+zg#3ZZ*~bH=4?}(lf)PdwQqq`GTswtRy0Ke&v1fF*@XH_$%-So$GKwQu`*5ytdhSEQ
+z0v0|YEaY_Gjhig`gmfFn;GJ}-jy~m5ZKaZT9qoT47#G^Rr+5jku6&*rIZIVuS9gV|
+z1#E?a?{FdcF$L=kU7UR!Q2H?BdmuQ8DI>AND07~W*kvyBVD=!q0A`<sEP^>;4G5>H
+zo95dXjLgva$%Am<*n%OqK`1h!Bjc61Po2kfrlVif9p#$$aAg*O?oQp2ci>Oy)H!r0
+znUaIR?1YDeHO}lrtce;U5KU|FR~x=`^yAU5zkh%9%h7ME8-Ich&%ORLM|)LTa_x^r
+zp7F(ln?rkW&=(=Bbhw-5DzAoM)>i3u!INrIZUe}HRH>TCW5mqbeD`&~+YoqH9oE|;
+zo++t=Oz>23;o`2J120m$DPy{oO38(~`^_XRw4c?JO6iuWRazt_uCAv&$&35eXv0pM
+z+OLt}XGFXP4*%X-`wX1Owe(@VbH5f+aW2+A;PRoW$7|+fQl?cp<R!0EA|Jtl((cPO
+zg-rFvkMvDkB{t5)8tvxlL1Kc%RF{Zlhr-WUrYp`0-Fy3#>)wA^pGyQxiU@{DggdYR
+zDv6?p^oI^5${7L8m}*a<QoaBhJ^1arme36%ukXS>{=R}?NOlL}3V7*Kv4WGY+ZNJ~
+z(_C_?n~?kyZt~usFRsEV@shQ;fop`&id9(YTbJFW+QBkPppa7ZA))9=8{l~3pS|Ay
+z0OE}KIXuwKyfF4axwJ5xbA<ur$HM0eV^%g1YnZp*)U#!C2)IqjC^!fel*m5d{n!WO
+z8&jXP<^|Iphz3L;kZ#dJv5dl0fHzKaCOW9Uhyp>6U&zuTn-q}R33ilf!uR}*_4VF*
+zw`nTi6m1LsHMD#g1XM(kLpEx6$dy10^s?n`tFBa<SF#%jL(fe#c@;z)n5^8G&6_$B
+zT#oAsQh$NM8<xVw(2|{;?_LK_5^r&m$sGqsbUJkJt>;L*(7`$Ku%74S^+CCmyjfQR
+z$lWQ06hG-=?$iOzpHmPF4BX;PaJGPU*I&qBftRsq?;5b;rhzCys^TTPo;9vTj9xJq
+z*(0`vCE0@-I-$fbORP{tXc_DL_98MDnGL$3j*<j>YLe(?l9V-@K%Y!>J4vv;**D^K
+zjQKW-cTl{G;*>wLTE#t#0Efh6j7a1}&B$vnnf*bxrCV&2R>Rsf9)aC=c466r5A#A=
+ztV|oeHanWtg7^5h86V?+p%gw?&HYRS*qB5NW)AS{7lo#y_wC*8U@tRmu?=9g;n$&8
+G-G2cFL;=MB
+
+diff --git a/orders/__pycache__/urls.cpython-310.pyc b/orders/__pycache__/urls.cpython-310.pyc
+deleted file mode 100644
+index 60ba60e303a4992b2fe69a93451791beae862995..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 720
+zcmZXRyN=U96ozNUmpF;-BwSWJ02FEB9<5d@v^7Yqpl}meIVUE`*p6n#S#8?X^psH2
+z@Icd2?F&%Qz!^JQAu*PJ&3FEP?oE=67`0dFm-2<r*iQ%lHs@Z`uYZsL11?#`bIutE
+z@T91`-0S+j^s68bsxS{b4tl0OgHR4CmNU-KJFz^%=<5&$$iE4y1P~$Hj$jC*&t69%
+zM%(d;p9ImEycpuMmk=e8o@qjq!t_itq6s{4REGH!p5C(gvj<L_o^u<&Q-JE@2Jdds
+zJW$OQlN($Ytu*hO)}WdT>+cKm$qqL4O16M=u7W-o9B81nVdEyzmf2C)Tgr_#G>=~w
+z6(0QpAhU7rtP~aoj~ADl+Pv;d8@S2<B^rE8_4r?^-2)ANO!at-6dtf{sXkj3a@9)8
+zEYG#K^O+jZUX>upFBEFCTr1kuU88mj)tyf(dR=D6ur2DcS+q*(?tChA1BcEF`=q6%
+zN;(=U<sRSqT{d>H#7XL8;+!!#bZ3;T^>?P8JHyHEH`xbGSCtjJ=CE!Q&4ntvLA^80
+zKI`wJD(a%d3Tv~}_Y|o5y3X8ci~YTgE~^GwiC69o^-GeN#eB+R`a%(l)Ju6PA}+Z9
+KClXGHe*Fa)T*j^d
+
+diff --git a/orders/__pycache__/views.cpython-310.pyc b/orders/__pycache__/views.cpython-310.pyc
+deleted file mode 100644
+index 3e8c64956ed307c19d603f7e7d3f50736a2f1ed1..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 2648
+zcmZ`*OLH4V5T2QRXeF&=Id&W;yuzzMK-meTpbAp1R3%lw0S6FpSV(QHHDg)wu2z{D
+zIThFX<Q&O?8wU<HH~#^C%v?F;N^UvCbkD9IN+r8BJw3DY=*QRHo3~mG0?&V~KL>v|
+z3HcWX=N}gax1gzifN;WTN-`QzN;u<A$}%T%fG6Bd-OP(T%X_Jx)uNi^{WQqxQQh)2
+zm~TXltQj@!IH<<3wwhzSo`zW~YT56Nw4H@f2z--=k4QAfTf7Z@htKg2^z(e4Ux5As
+zU*L<-FMLh-MZWZi@FhV<i~CM=kzeYO?(!3moph-Qc821C5?Vc><;2`w$%X6*IZV>w
+zu8^?C=}j}}<_AK@`Nl}}p_B2AYd2sr{6_1^k3voIu@YTod@07T-vm<dp@gMfM+R`R
+z^pVudJ3M;_?Dn&qi&XXT?vsZB<3YO(O<e(^$%r1XL$XJ;Q-HZSE9j8!JD`TMzPps8
+zylT~UaXM6bWlLwN@yq$HE76;#Rtm0+lccGY2!yRkaepe5mLV)TBC-SBv)ijbD?BjS
+z&UZF*sk9Js^^Q>6I-gXxWXU)gh)j%itRBLGtejV?)|e}kho*5R4xX(LGY#6I@&Yh3
+z>Y`ont5r7zrXV9wa+}HPz=7hN9nw8&d51f|vx;|tceuy>M?|{?E1Z3HhwRfmS9>FW
+zR4ZuV^4epz=M~;Ta7ZZ8bsp@~9?=ajV||~20UPVa{r+z6Cll&qBNg#@nr#UAtTqIt
+z)UWrR1rs^!3*csCc0f#YQ4iYFH-QX5>U+)K*d9tpH7VFW<>W8+2fGiq98s{fJ5DlT
+zJbT^|HQr{LC;G@SY~`A~3`a<Gwe>(r=3!_WH_@T}Je#cH=ckAypZF|1_K$b3mNxE7
+zk!Z1UGtK)+s@8xx+0tcl5l``~HrDjJ%Oxx-M^<|gFx@7gQRuCl%LUxz0NPCr2p(sg
+z-QmOnNw)B#Uv4yWaAkj*!u_$%b&^_um+1249IUhg$hUD%6Qzhtdzv{wR+eZjcx;6;
+zo|WrG{loJrqD9o}KpHe;@KWCinE%}O8D-Re9=HK(F!?bo=wl3>Jm{=bfZ=vcG%YBn
+z01Z|!j4XhL!@*@XqQE(9$gQ;?cx>3(2=XCPg%)KDJ61arl=8vykKo`}NMG(lxfGrj
+z(g0q04cHku@!M(K{|<v0ImrkD0fJ%;!0#Nm7zhQ6Jv;Kb4TXyLAS_(&^BROjt#Asr
+z3JVAW*b#unb=0^zC$Q%<V76)P5JF&Jh_oO?8oXJsD$|7P@)MBBVxx5GMI0^xd1YwG
+zOSohi$!kd7K!Q2u4B_%E7=DFQSAm>BdOG2+fVA<IPV`j049wLo1haKVw|(Y4`3~NJ
+zz?SbK!MKp`A$cDO0#ts0<T?=Js${2h^bD3)ae;NTUH>5tyGUkrG8Jk|dGJ7s+K@I_
+z8&G?STQ{I>!~*Lu`5CO5vExh?_!Pck6#xuC_J2%Ajs^rkig6!P?p-F64)>ut02+9W
+z2dCAc4#{nj40)H9YBg<)mLUkm$16kjbJPF}(C$K&8>H9~<Ebd?NUPjb&2|0rSzvRR
+zLO_^$G8jlP0GCMwa8+H(`2PYYUa-&nS=OkI{T5a!T-9bib&r{C?6~8|FJZC|ZRSDa
+z+=6DyqaYFF+K35f<Q{m3B=SWq3OEKcGvQsVj=w;S?+Lx$t(zc@F%ieHX~Z#9-zg;h
+z*o1L>f10G_mop7z8!j;c)JXXd{t+amk*EXJvHCZN`)Q)oIrXffn5QIS`Uhw><O4`q
+z5b`*;-d!?n2{kv~lpx20Ty9HL$28B5RrVs&;iF_c$XEErO8J{$t$RAHwsNWaQ>`q@
+zO|x3P1^*+m1}9oKlnELB;z;=$P(MA>Mv%>xHWgU}T5Ct)clc9M*~|+4G7U{|vozlt
+bVn<;W3?a9bZ-*{gE^q=bxDxom@>1|WXcb%L
+
+diff --git a/orders/admin.py b/orders/admin.py
+index e60cb06..6d508e5 100644
+--- a/orders/admin.py
++++ b/orders/admin.py
+@@ -1,9 +1,10 @@
+ from django.contrib import admin
++from typing import List, Tuple
+ from .models import Order
+ 
+ 
+ @admin.register(Order)
+ class OrderAdmin(admin.ModelAdmin):
+-    list_display = ('id', 'table_number', 'total_price', 'status')
+-    list_filter = ('status',)
+-    search_fields = ('table_number',)
++    list_display: Tuple[str, ...] = ('id', 'table_number', 'total_price', 'status')
++    list_filter: Tuple[str, ...] = ('status',)
++    search_fields: Tuple[str, ...] = ('table_number',)
+diff --git a/orders/management/__init__.py b/orders/management/__init__.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/orders/management/commands/__init__.py b/orders/management/commands/__init__.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/orders/management/commands/generate_mock_data.py b/orders/management/commands/generate_mock_data.py
+new file mode 100644
+index 0000000..c7b0f5a
+--- /dev/null
++++ b/orders/management/commands/generate_mock_data.py
+@@ -0,0 +1,48 @@
++from django.core.management.base import BaseCommand
++from orders.models import Order
++from typing import Any, Dict
++import random
++
++class Command(BaseCommand):
++    help = 'Generates mock data for testing'
++
++    def add_arguments(self, parser):
++        parser.add_argument('count', type=int, help='Number of orders to generate')
++
++    def handle(self, *args: Any, **kwargs: Dict[str, Any]) -> None:
++        count = int(kwargs['count'])
++        
++        # Sample menu items
++        menu_items: List[Dict[str, Any]] = [
++            {"name": "Борщ", "price": 350},
++            {"name": "Цезарь с курицей", "price": 420},
++            {"name": "Стейк Рибай", "price": 1500},
++            {"name": "Паста Карбонара", "price": 450},
++            {"name": "Суп грибной", "price": 300},
++            {"name": "Пицца Маргарита", "price": 550},
++            {"name": "Салат Греческий", "price": 380},
++            {"name": "Тирамису", "price": 280},
++            {"name": "Капучино", "price": 180},
++            {"name": "Лимонад", "price": 150},
++        ]
++
++        statuses: List[str] = ['pending', 'ready', 'paid']
++
++        for i in range(count):
++            num_items: int = random.randint(1, 5)
++            order_items: List[Dict[str, Any]] = random.sample(menu_items, num_items)
++            
++            order: Order = Order.objects.create(
++                table_number=random.randint(1, 20),
++                items=order_items,
++                status=random.choice(statuses)
++            )
++            order.calculate_total()
++
++            self.stdout.write(
++                self.style.SUCCESS(f'Created order #{order.id} for table {order.table_number}')
++            )
++
++        self.stdout.write(
++            self.style.SUCCESS(f'Successfully created {count} orders')
++        )
+diff --git a/orders/migrations/__pycache__/0001_initial.cpython-310.pyc b/orders/migrations/__pycache__/0001_initial.cpython-310.pyc
+deleted file mode 100644
+index e55c530eccd13ea6c25d9a1523811930768cf04b..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 961
+zcmYjQJ8u**5cWRqy%$0fQczJLuE~WSp+KUbASEe6nr$rKjc?;*ABXLYI7&dGN&^KQ
+z0y??~0g8k;{=%kpOBMbBAOYjOLy0YW=ka+w^LaLFx0?jVkDsriu1Cmst6UsDDl53u
+zb=-h}6O+UVox}}YhukCJg7=Jo$DMuesTX?S?~qRA46&r+nr0#*$+XB)WvWRAJXU?{
+zx;O$<R&Xhe8z-RyBy_<Ey@-T9uk2Ut6}+}z2M4DQ6{sHh0~cz%_NMWcpj1bxSxODW
+zwV(+t2%vrBp>GB)K}6uvI|pXbdf8f|3d|k3krTFI9@AYgjm`ggJ}{MS30xXiz`Aia
+z);hikSgteLmz-%1rZtozVRA$d_{cOAmx9IOF*m^>m%U7Jnz95n&3ZA)dD6pR6`^^e
+zOiO2)#S{bd`I(F5M!3pxW*?#BnHk`HjE<O?^|>-N-~*P&8kuB|D2PaCWKwCSbJg*X
+z;o6X=AkrwG#{k8PYsI+uT$~gii{s)eeoqim!Ng&dTb_%T#rX6IVm=gO^!P(2AfL64
+z*TuKuOL2Vqy!eC%$MVV~pIUz}!(^45Lw%A&%+pBk+0$jA)q&tKsIAV7snfD{N==he
+zeC-?wpeCU7Va{R;My)1Np^-5Y0Jo|0v@bBcCBw8<ONuvbpGfRQVuHIOx`X7e+dE9K
+zk!l`sInf&Tceb~tj<pGEQ^)Ean_`;TkWc&XJ&`vsWV!v??e5~ksV+On4hNZ3nseD*
+z<LW?X!)|8ZpC&A25l?uksTv_5nb=kLyrsL#%gZ<Ew4kNoNZNm;ic4L^txkLwr|&uo
+zZqsQxbIzjU{`UXW|CYEdY^(<Cvoy+<pjQ%5)?7NzQ=Ld1jA!b%CY;`O>=pK|S$EO<
+E2er~C(*OVf
+
+diff --git a/orders/migrations/__pycache__/0002_item.cpython-310.pyc b/orders/migrations/__pycache__/0002_item.cpython-310.pyc
+deleted file mode 100644
+index e5f847ef0ff469de192f4723c9b6a78f6f3230dc..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 757
+zcmYjPO>Yx15VgIVZ8q74AfcY&f|N@WI3rYOROq2SK)K{%xtYn<$$nvPD#8`6x$_tJ
+zHQasWl)r!kVY~}!$MVR}9?!gac6oT%V`M+VZ|PgX*iR4cTS(x9rhQ5d81Rhce8zJz
+z6P&$aARze4AV9thz67%X!uM>{*-<PT3D?VYYE-Su!n!Cg0W&-INB1oza6;2wkwZ4)
+zz-9t?%4Y$F%Z@LA(eeO78Xbt>U>hz3bZM^(G4!^aP@hl?2^_*;D;6RR;K5c<h8_%w
+z&O;Yp{O3WWqS62w>ypW2@=WSN*IH#RJg+f#Lc`UW6X(-W=n}QAOF1{FY6RD>jLwzW
+z$Q5o}Y|+pq{TW?yi{`qtC<~RN3%%d%sgn_>?$sxmVUgB1u0z-7xFdzx&I?XF27q%)
+znaL_sbF^(Z=v3EsB+P(<T(r=bfxR5{T~{_0q;x$gNy>GGv`(b_xK^33>Jeat1z<7P
+zXpOJs`lk*53$MKi{7&*(r?059GoRYUr#H&9%VgT}X;H7N@ZZyYXXY{8Y}~JR;}6ul
+z9jjG&yC{vV5zTmtc2$?vxKUQ-s!%EBSk%&PC?Ie5?fC9Dj7j_FQq$RSwK4vWMKtXZ
+zxh@kyxDPvmKN15z<l=Yur@L=rF6mWbSgIl|kKwv$u<5BeyyMueo=`5=ebGwwlKb?&
+J&QKf$e*rB$)m8ui
+
+diff --git a/orders/migrations/__pycache__/__init__.cpython-310.pyc b/orders/migrations/__pycache__/__init__.cpython-310.pyc
+deleted file mode 100644
+index 7f29b9b7875249060f81c2b08f0087ca0ce41727..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 174
+zcmd1j<>g`k0;M0*(?RrO5P=LBfgA@QE@lA|DGb33nv8xc8Hzx{2;x_uerR!OQL%nv
+zc79n}eo=8rYHE?bOKNd;Nq&KTeo;zlQG9M<USfJ`Zfaghd~qdEK`unRSU)#2y(qCH
+mGe56bKR!M)FS8^*Uaz3?7Kcr4eoARhsvXFxVkRKL!T<oRhb<le
+
+diff --git a/orders/models.py b/orders/models.py
+index 522acbe..79a293d 100644
+--- a/orders/models.py
++++ b/orders/models.py
+@@ -1,4 +1,6 @@
+ from django.db import models
++from typing import List, Dict, Any, cast
++from decimal import Decimal
+ 
+ 
+ class Order(models.Model):
+@@ -14,18 +16,18 @@ class Order(models.Model):
+     status = models.CharField(
+         max_length=10, choices=STATUS_CHOICES, default='pending')
+ 
+-    def __str__(self):
++    def __str__(self) -> str:
+         return f"Заказ {self.id} (Стол {self.table_number}) - {self.get_status_display()}"
+ 
+-    def calculate_total(self):
++    def calculate_total(self) -> None:
+         """Метод для автоматического расчета общей стоимости заказа."""
+-        self.total_price = sum(item['price'] for item in self.items)
++        self.total_price = sum(Decimal(str(item['price'])) for item in self.items)
+         self.save()
+ 
+ 
+ class Item(models.Model):
+-    name = models.CharField(max_length=255)
+-    price = models.DecimalField(max_digits=10, decimal_places=2)
++    name: str = models.CharField(max_length=255)
++    price: Decimal = models.DecimalField(max_digits=10, decimal_places=2)
+ 
+-    def __str__(self):
++    def __str__(self) -> str:
+         return self.name
+diff --git a/orders/serializers.py b/orders/serializers.py
+index 01e5cb4..97171f3 100644
+--- a/orders/serializers.py
++++ b/orders/serializers.py
+@@ -1,8 +1,18 @@
+ from rest_framework import serializers
+-from .models import Order  # Импортируем модель Order
++from typing import Any, Dict, List
++from .models import Order
+ 
+ 
+ class OrderSerializer(serializers.ModelSerializer):
+     class Meta:
+-        model = Order  # Модель, для которой будет сериализатор
+-        fields = '__all__'  # Все поля модели включаем в сериализатор
++        model = Order
++        fields: str = '__all__'
++
++    def to_representation(self, instance: Order) -> Dict[str, Any]:
++        return super().to_representation(instance)
++
++    def create(self, validated_data: Dict[str, Any]) -> Order:
++        return super().create(validated_data)
++
++    def update(self, instance: Order, validated_data: Dict[str, Any]) -> Order:
++        return super().update(instance, validated_data)
+diff --git a/orders/static/orders/css/style.css b/orders/static/orders/css/style.css
+new file mode 100644
+index 0000000..7ef29b2
+--- /dev/null
++++ b/orders/static/orders/css/style.css
+@@ -0,0 +1,381 @@
++:root {
++    --primary-color: #2c3e50;
++    --secondary-color: #3498db;
++    --background-color: #f5f6fa;
++    --success-color: #2ecc71;
++    --danger-color: #e74c3c;
++}
++
++body {
++    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
++    line-height: 1.6;
++    margin: 0;
++    padding: 20px;
++    background-color: var(--background-color);
++}
++
++.container {
++    max-width: 1200px;
++    margin: 0 auto;
++    padding: 20px;
++}
++
++h1 {
++    color: var(--primary-color);
++    text-align: center;
++    margin-bottom: 30px;
++}
++
++/* Table Styles */
++table {
++    width: 100%;
++    border-collapse: collapse;
++    background-color: white;
++    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
++    margin-bottom: 20px;
++}
++
++th, td {
++    padding: 12px 15px;
++    text-align: left;
++    border-bottom: 1px solid #ddd;
++}
++
++th {
++    background-color: #f8f9fa;
++    color: var(--primary-color);
++    font-weight: 600;
++    border-bottom: 2px solid #dfe6e9;
++}
++
++tr:hover {
++    background-color: #f5f5f5;
++}
++
++/* Button Styles */
++.btn {
++    display: inline-block;
++    padding: 8px 16px;
++    border-radius: 4px;
++    text-decoration: none;
++    color: white;
++    font-weight: bold;
++    transition: background-color 0.3s;
++    cursor: pointer;
++    border: none;
++}
++
++.btn-primary {
++    background-color: var(--secondary-color);
++}
++
++.btn-primary:hover {
++    background-color: #2980b9;
++}
++
++.btn-danger {
++    background-color: var(--danger-color);
++}
++
++.btn-danger:hover {
++    background-color: #c0392b;
++}
++
++/* Form Styles */
++.form-group {
++    margin-bottom: 15px;
++}
++
++label {
++    display: block;
++    margin-bottom: 5px;
++    color: var(--primary-color);
++}
++
++input[type="text"],
++input[type="number"],
++select {
++    width: 100%;
++    padding: 8px;
++    border: 1px solid #ddd;
++    border-radius: 4px;
++    margin-bottom: 10px;
++}
++
++/* Status Badges */
++.status-badge {
++    padding: 4px 8px;
++    border-radius: 4px;
++    font-size: 0.9em;
++    font-weight: bold;
++}
++
++.status-pending {
++    background-color: #ffeaa7;
++    color: #d35400;
++}
++
++.status-ready {
++    background-color: #81ecec;
++    color: #00b894;
++}
++
++.status-paid {
++    background-color: #a8e6cf;
++    color: #27ae60;
++}
++
++/* Navigation */
++.nav {
++    background-color: var(--primary-color);
++    padding: 1rem;
++    margin-bottom: 2rem;
++}
++
++.nav a {
++    color: white;
++    text-decoration: none;
++    margin-right: 1rem;
++}
++
++.nav a:hover {
++    color: var(--secondary-color);
++}
++
++/* Cards */
++.card {
++    background-color: white;
++    border-radius: 8px;
++    padding: 20px;
++    margin-bottom: 20px;
++}
++
++/* Base styles */
++body {
++    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
++    margin: 0;
++    padding: 0;
++    background-color: #f5f6fa;
++    color: #2d3436;
++}
++
++.container {
++    max-width: 1200px;
++    margin: 0 auto;
++    padding: 2rem;
++}
++
++/* Navigation */
++.nav {
++    background-color: #fff;
++    padding: 1rem;
++    border-radius: 8px;
++    margin-bottom: 2rem;
++    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
++    display: flex;
++    gap: 1.5rem;
++}
++
++.nav a {
++    color: #2d3436;
++    text-decoration: none;
++    font-weight: 500;
++    padding: 0.5rem 1rem;
++    border-radius: 6px;
++    transition: background-color 0.2s;
++}
++
++.nav a:hover {
++    background-color: #f1f2f6;
++}
++
++/* Card styles */
++.card {
++    background-color: #fff;
++    border-radius: 8px;
++    padding: 2rem;
++    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
++}
++
++/* Table styles */
++.table-responsive {
++    overflow-x: auto;
++}
++
++table {
++    width: 100%;
++    border-collapse: collapse;
++    margin-top: 1rem;
++}
++
++th, td {
++    padding: 1rem;
++    text-align: left;
++    border-bottom: 1px solid #dfe6e9;
++}
++
++
++/* Status badges */
++.status-badge {
++    padding: 0.5rem 1rem;
++    border-radius: 20px;
++    font-size: 0.875rem;
++    font-weight: 500;
++}
++
++.status-pending {
++    background-color: #ffeaa7;
++    color: #b7791f;
++}
++
++.status-ready {
++    background-color: #55efc4;
++    color: #00b894;
++}
++
++.status-paid {
++    background-color: #81ecec;
++    color: #00cec9;
++}
++
++/* Buttons */
++.btn {
++    display: inline-block;
++    padding: 0.5rem 1rem;
++    border-radius: 6px;
++    font-weight: 500;
++    text-decoration: none;
++    cursor: pointer;
++    border: none;
++    transition: background-color 0.2s;
++}
++
++.btn-primary {
++    background-color: #0984e3;
++    color: white;
++}
++
++.btn-primary:hover {
++    background-color: #0870c0;
++}
++
++.btn-danger {
++    background-color: #d63031;
++    color: white;
++}
++
++.btn-danger:hover {
++    background-color: #b02324;
++}
++
++/* Form styles */
++.form-group {
++    margin-bottom: 1.5rem;
++}
++
++label {
++    display: block;
++    margin-bottom: 0.5rem;
++    font-weight: 500;
++}
++
++input[type="text"],
++input[type="number"],
++select {
++    width: 100%;
++    padding: 0.75rem;
++    border: 1px solid #dfe6e9;
++    border-radius: 6px;
++    font-size: 1rem;
++}
++
++.items-container {
++    margin: 2rem 0;
++}
++
++.item-row {
++    display: flex;
++    gap: 1rem;
++    margin-bottom: 1rem;
++    align-items: center;
++}
++
++.add-item-btn {
++    background-color: #00b894;
++    color: white;
++    border: none;
++    padding: 0.75rem 1.5rem;
++    border-radius: 6px;
++    cursor: pointer;
++    font-weight: 500;
++}
++
++.add-item-btn:hover {
++    background-color: #00a187;
++}
++
++/* Revenue page */
++.revenue-card {
++    text-align: center;
++    padding: 3rem;
++}
++
++.revenue-amount {
++    font-size: 2.5rem;
++    font-weight: 700;
++    color: #00b894;
++    margin: 1rem 0;
++}
++/* Header styles */
++.header-flex {
++    display: flex;
++    justify-content: space-between;
++    align-items: center;
++    margin-bottom: 1.5rem;
++}
++
++.header-flex h1 {
++    margin: 0;
++}
++
++/* Items list styles */
++.items-list {
++    list-style: none;
++    padding: 0;
++    margin: 0;
++}
++
++.item-entry {
++    margin-bottom: 4px;
++}
++
++.item-name {
++    font-weight: 500;
++}
++
++.item-price {
++    color: #666;
++}
++
++.price-cell {
++    font-weight: 500;
++}
++
++.action-buttons {
++    display: flex;
++    gap: 8px;
++}
++.form-actions {
++    display: flex;
++    justify-content: flex-end;
++    gap: 10px;
++}
++
++.btn-secondary {
++    background-color: #95a5a6;
++    color: white;
++}
++
++.btn-secondary:hover {
++    background-color: #7f8c8d;
++}
+diff --git a/orders/templates/orders/order_create.html b/orders/templates/orders/order_create.html
+index a8c6e98..16a21e1 100644
+--- a/orders/templates/orders/order_create.html
++++ b/orders/templates/orders/order_create.html
+@@ -1,77 +1,3 @@
+- {% load static %}
+- <!DOCTYPE html>
+- <html lang="en">
+- <head>
+-     <meta charset="UTF-8">
+-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+-     <title>Список заказов</title>
+-     <link rel="stylesheet" href="{% static 'orders/css/style.css' %}">
+- </head>
+- <body>
+-     <div class="container">
+-         <nav class="nav">
+-             <a href="{% url 'order_list' %}">Заказы</a>
+-             <a href="{% url 'order_create' %}">Новый заказ</a>
+-             <a href="{% url 'calculate_revenue' %}">Выручка</a>
+-         </nav>
+-
+-         <div class="card">
+-             <div style="display: flex; justify-content: space-between; align-items: center;
+- margin-bottom: 1.5rem;">
+-                 <h1 style="margin: 0;">Список заказов</h1>
+-                 <a href="{% url 'order_create' %}" class="btn btn-primary">+ Новый заказ</a>
+-             </div>
+-
+-             <div class="table-responsive">
+-                 <table>
+-                     <thead>
+-                         <tr>
+-                             <th>ID</th>
+-                             <th>Стол</th>
+-                             <th>Блюда</th>
+-                             <th>Сумма</th>
+-                             <th>Статус</th>
+-                             <th>Действия</th>
+-                         </tr>
+-                     </thead>
+-                     <tbody>
+-                         {% for order in orders %}
+-                         <tr>
+-                             <td>#{{ order.id }}</td>
+-                             <td>{{ order.table_number }}</td>
+-                             <td>
+-                                 <ul style="list-style: none; padding: 0; margin: 0;">
+-                                     {% for item in order.items %}
+-                                     <li style="margin-bottom: 4px;">
+-                                         <span style="font-weight: 500;">{{ item.name }}</span>
+-                                         <span style="color: #666;">{{ item.price }}₽</span>
+-                                     </li>
+-                                     {% endfor %}
+-                                 </ul>
+-                             </td>
+-                             <td style="font-weight: 500;">{{ order.total_price }}₽</td>
+-                             <td>
+-                                 <span class="status-badge status-{{ order.status }}">
+-                                     {{ order.get_status_display }}
+-                                 </span>
+-                             </td>
+-                             <td>
+-                                 <div style="display: flex; gap: 8px;">
+-                                     <a href="{% url 'order_update' order.id %}" class="btn
+- btn-primary">Изменить</a>
+-                                     <a href="{% url 'order_delete' order.id %}" class="btn
+- btn-danger">Удалить</a>
+-                                 </div>
+-                             </td>
+-                         </tr>
+-                         {% endfor %}
+-                     </tbody>
+-                 </table>
+-             </div>
+-         </div>
+-     </div>
+- </body>
+- </html> 
+ 
+ {% load static %}
+ <!DOCTYPE html>
+@@ -105,15 +31,14 @@
+                         <div class="item-row">
+                             <input type="text" name="items[]" placeholder="Название блюда" required>
+                             <input type="number" name="prices[]" placeholder="Цена" required min="0">
++                            <button type="button" onclick="this.parentElement.remove()" class="btn btn-danger">×</button>
+                         </div>
+                     </div>
+-                    <button type="button" class="add-item-btn" onclick="addItem()">
+-                        + Добавить блюдо
+-                    </button>
++                    <button type="button" class="add-item-btn" onclick="addItem()">+ Добавить блюдо</button>
+                 </div>
+ 
+-                <div style="display: flex; justify-content: flex-end; gap: 10px;">
+-                    <a href="{% url 'order_list' %}" class="btn btn-danger" style="background-color: #95a5a6;">Отмена</a>
++                <div class="form-actions">
++                    <a href="{% url 'order_list' %}" class="btn btn-secondary">Отмена</a>
+                     <button type="submit" class="btn btn-primary">Создать заказ</button>
+                 </div>
+             </form>
+@@ -128,7 +53,7 @@
+             newItemDiv.innerHTML = `
+                 <input type="text" name="items[]" placeholder="Название блюда" required>
+                 <input type="number" name="prices[]" placeholder="Цена" required min="0">
+-                <button type="button" onclick="this.parentElement.remove()" class="btn btn-danger" style="padding: 8px; min-width: 40px;">×</button>
++                <button type="button" onclick="this.parentElement.remove()" class="btn btn-danger">×</button>
+             `;
+             itemsDiv.appendChild(newItemDiv);
+         }
+diff --git a/orders/templates/orders/order_list.html b/orders/templates/orders/order_list.html
+index c72763a..73aa4da 100644
+--- a/orders/templates/orders/order_list.html
++++ b/orders/templates/orders/order_list.html
+@@ -16,8 +16,8 @@
+         </nav>
+ 
+         <div class="card">
+-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+-                <h1 style="margin: 0;">Список заказов</h1>
++            <div class="header-flex">
++                <h1>Список заказов</h1>
+                 <a href="{% url 'order_create' %}" class="btn btn-primary">+ Новый заказ</a>
+             </div>
+             
+@@ -39,23 +39,23 @@
+                             <td>#{{ order.id }}</td>
+                             <td>{{ order.table_number }}</td>
+                             <td>
+-                                <ul style="list-style: none; padding: 0; margin: 0;">
++                                <ul class="items-list">
+                                     {% for item in order.items %}
+-                                    <li style="margin-bottom: 4px;">
+-                                        <span style="font-weight: 500;">{{ item.name }}</span>
+-                                        <span style="color: #666;">{{ item.price }}₽</span>
++                                    <li class="item-entry">
++                                        <span class="item-name">{{ item.name }}</span>
++                                        <span class="item-price">{{ item.price }}₽</span>
+                                     </li>
+                                     {% endfor %}
+                                 </ul>
+                             </td>
+-                            <td style="font-weight: 500;">{{ order.total_price }}₽</td>
++                            <td class="price-cell">{{ order.total_price }}₽</td>
+                             <td>
+                                 <span class="status-badge status-{{ order.status }}">
+                                     {{ order.get_status_display }}
+                                 </span>
+                             </td>
+                             <td>
+-                                <div style="display: flex; gap: 8px;">
++                                <div class="action-buttons">
+                                     <a href="{% url 'order_update' order.id %}" class="btn btn-primary">Изменить</a>
+                                     <a href="{% url 'order_delete' order.id %}" class="btn btn-danger">Удалить</a>
+                                 </div>
+diff --git a/orders/templates/orders/order_update.html b/orders/templates/orders/order_update.html
+index 9264747..0b1e64c 100644
+--- a/orders/templates/orders/order_update.html
++++ b/orders/templates/orders/order_update.html
+@@ -1,51 +1,73 @@
++{% load static %}
+ <!DOCTYPE html>
+ <html lang="en">
+-
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Изменить заказ</title>
++    <link rel="stylesheet" href="{% static 'orders/css/style.css' %}">
+ </head>
+-
+ <body>
+-    <h1>Изменить заказ</h1>
+-    <form method="POST">
+-        {% csrf_token %}
+-        <label for="table_number">Номер стола:</label>
+-        <input type="number" name="table_number" value="{{ order.table_number }}" required><br>
++    <div class="container">
++        <nav class="nav">
++            <a href="{% url 'order_list' %}">Заказы</a>
++            <a href="{% url 'order_create' %}">Новый заказ</a>
++            <a href="{% url 'calculate_revenue' %}">Выручка</a>
++        </nav>
++
++        <div class="card">
++            <h1>Изменить заказ</h1>
++            <form method="POST">
++                {% csrf_token %}
++                <div class="form-group">
++                    <label for="table_number">Номер стола:</label>
++                    <input type="number" name="table_number" value="{{ order.table_number }}" required>
++                </div>
+ 
+-        <h3>Блюда:</h3>
+-        <div id="items">
++                <div class="items-container">
++                    <h3>Блюда:</h3>
++                    <div id="items">
+             {% for item in order.items %}
+-            <div>
++            <div class="item-row">
+                 <input type="text" name="items[]" value="{{ item.name }}" required>
+-                <input type="number" name="prices[]" value="{{ item.price }}" required>
++                <input type="number" name="prices[]" value="{{ item.price }}" required min="0">
++                <button type="button" onclick="this.parentElement.remove()" class="btn btn-danger">×</button>
+             </div>
+             {% endfor %}
+-        </div>
+-        <button type="button" onclick="addItem()">Добавить блюдо</button><br><br>
++                    </div>
++                    <button type="button" class="add-item-btn" onclick="addItem()">+ Добавить блюдо</button>
++                </div>
+ 
+-        <label for="status">Статус:</label>
+-        <select name="status">
+-            <option value="pending" {% if order.status == "pending" %}selected{% endif %}>В ожидании</option>
+-            <option value="ready" {% if order.status == "ready" %}selected{% endif %}>Готово</option>
+-            <option value="paid" {% if order.status == "paid" %}selected{% endif %}>Оплачено</option>
+-        </select><br><br>
++                <div class="form-group">
++                    <label for="status">Статус:</label>
++                    <select id="status" name="status">
++                        <option value="pending" {% if order.status == 'pending' %}selected{% endif %}>В ожидании</option>
++                        <option value="ready" {% if order.status == 'ready' %}selected{% endif %}>Готово</option>
++                        <option value="paid" {% if order.status == 'paid' %}selected{% endif %}>Оплачено</option>
++                    </select>
++                </div>
+ 
+-        <button type="submit">Сохранить изменения</button>
+-    </form>
++                <div class="form-actions">
++                    <a href="{% url 'order_list' %}" class="btn btn-secondary">Отмена</a>
++                    <button type="submit" class="btn btn-primary">Сохранить изменения</button>
++                </div>
++            </form>
++        </div>
++    </div>
+ 
+     <script>
+         function addItem() {
+             const itemsDiv = document.getElementById('items');
+             const newItemDiv = document.createElement('div');
++            newItemDiv.className = 'item-row';
+             newItemDiv.innerHTML = `
+                 <input type="text" name="items[]" placeholder="Название блюда" required>
+-                <input type="number" name="prices[]" placeholder="Цена" required>
++                <input type="number" name="prices[]" placeholder="Цена" required min="0">
++                <button type="button" onclick="this.parentElement.remove()" class="btn btn-danger">×</button>
+             `;
+             itemsDiv.appendChild(newItemDiv);
+         }
+     </script>
+ </body>
+ 
+-</html>
+\ No newline at end of file
++</html>
+diff --git a/orders/templates/orders/revenue.html b/orders/templates/orders/revenue.html
+index 1fd1a9f..c1d13b9 100644
+--- a/orders/templates/orders/revenue.html
++++ b/orders/templates/orders/revenue.html
+@@ -1,16 +1,25 @@
++{% load static %}
+ <!DOCTYPE html>
+ <html lang="en">
+-
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Выручка за смену</title>
++    <link rel="stylesheet" href="{% static 'orders/css/style.css' %}">
+ </head>
+-
+ <body>
+-    <h1>Выручка за смену</h1>
+-    <p>Общая сумма оплаченных заказов: <strong>{{ total_revenue }} ₽</strong></p>
+-    <a href="/">Вернуться к списку заказов</a>
+-</body>
++    <div class="container">
++        <nav class="nav">
++            <a href="{% url 'order_list' %}">Заказы</a>
++            <a href="{% url 'order_create' %}">Новый заказ</a>
++            <a href="{% url 'calculate_revenue' %}">Выручка</a>
++        </nav>
+ 
++        <div class="card revenue-card">
++            <h1>Выручка за смену</h1>
++            <div class="revenue-amount">{{ total_revenue }} ₽</div>
++            <a href="{% url 'order_list' %}" class="btn btn-primary">Вернуться к списку заказов</a>
++        </div>
++    </div>
++</body>
+ </html>
+diff --git a/orders/tests/__init__.py b/orders/tests/__init__.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/orders/tests/test_api.py b/orders/tests/test_api.py
+new file mode 100644
+index 0000000..b868b72
+--- /dev/null
++++ b/orders/tests/test_api.py
+@@ -0,0 +1,63 @@
++from django.test import TestCase, Client
++from orders.models import Order
++import json
++
++class OrderAPITests(TestCase):
++    def setUp(self):
++        self.client = Client()
++        self.order_data = {
++            'table_number': 3,
++            'items': [
++                {'name': 'Борщ', 'price': 350},
++                {'name': 'Салат', 'price': 250}
++            ],
++            'status': 'pending'
++        }
++        self.order = Order.objects.create(**self.order_data)
++        self.order.calculate_total()
++
++    def test_api_list_orders(self):
++        """Test API endpoint for listing orders"""
++        response = self.client.get('/orders/')
++        self.assertEqual(response.status_code, 200)
++        data = json.loads(response.content)
++        self.assertEqual(len(data), 1)
++        self.assertEqual(data[0]['table_number'], 3)
++
++    def test_api_create_order(self):
++        """Test API endpoint for creating an order"""
++        new_order_data = {
++            'table_number': 5,
++            'items': [{'name': 'Пицца', 'price': 550}],
++            'status': 'pending'
++        }
++        response = self.client.post(
++            '/orders/',
++            data=json.dumps(new_order_data),
++            content_type='application/json'
++        )
++        self.assertEqual(response.status_code, 201)
++        self.assertEqual(Order.objects.count(), 2)
++
++    def test_api_update_order(self):
++        """Test API endpoint for updating an order"""
++        updated_data = {
++            'table_number': 7,
++            'items': [{'name': 'Суп', 'price': 300}],
++            'status': 'ready'
++        }
++        response = self.client.put(
++            f'/orders/{self.order.id}/',
++            data=json.dumps(updated_data),
++            content_type='application/json'
++        )
++        self.assertEqual(response.status_code, 200)
++        updated_order = Order.objects.get(id=self.order.id)
++        self.assertEqual(updated_order.table_number, 7)
++        self.assertEqual(updated_order.status, 'ready')
++
++    def test_api_delete_order(self):
++        """Test API endpoint for deleting an order"""
++        response = self.client.delete(f'/orders/{self.order.id}/')
++        self.assertEqual(response.status_code, 204)
++        self.assertEqual(Order.objects.count(), 0)
+diff --git a/orders/tests/test_models.py b/orders/tests/test_models.py
+new file mode 100644
+index 0000000..2cf3eae
+--- /dev/null
++++ b/orders/tests/test_models.py
+@@ -0,0 +1,33 @@
++from django.test import TestCase
++from orders.models import Order
++from decimal import Decimal
++
++class OrderModelTests(TestCase):
++    def setUp(self):
++        self.order_data = {
++            'table_number': 5,
++            'items': [
++                {'name': 'Борщ', 'price': 350},
++                {'name': 'Салат', 'price': 250}
++            ],
++            'status': 'pending'
++        }
++        self.order = Order.objects.create(**self.order_data)
++        self.order.calculate_total()
++
++    def test_order_creation(self):
++        """Test that an order is created with correct data"""
++        self.assertEqual(self.order.table_number, 5)
++        self.assertEqual(len(self.order.items), 2)
++        self.assertEqual(self.order.status, 'pending')
++        self.assertEqual(self.order.total_price, Decimal('600.00'))
++
++    def test_calculate_total(self):
++        """Test total price calculation"""
++        order = Order.objects.create(
++            table_number=1,
++            items=[{'name': 'Тест', 'price': 100}],
++            status='pending'
++        )
++        order.calculate_total()
++        self.assertEqual(order.total_price, Decimal('100.00'))
+diff --git a/orders/tests/test_views.py b/orders/tests/test_views.py
+new file mode 100644
+index 0000000..00aa9dc
+--- /dev/null
++++ b/orders/tests/test_views.py
+@@ -0,0 +1,130 @@
++from django.test import TestCase, Client
++from django.urls import reverse
++from orders.models import Order
++from decimal import Decimal
++from django.db import models
++
++class OrderViewTests(TestCase):
++    def setUp(self):
++        self.client = Client()
++        self.order_data = {
++            'table_number': 3,
++            'items': [
++                {'name': 'Борщ', 'price': 350},
++                {'name': 'Салат', 'price': 250}
++            ],
++            'status': 'pending'
++        }
++        self.order = Order.objects.create(**self.order_data)
++        self.order.calculate_total()
++
++    def test_order_list_view(self):
++        """Test the order list view"""
++        response = self.client.get(reverse('order_list'))
++        self.assertEqual(response.status_code, 200)
++        self.assertTemplateUsed(response, 'orders/order_list.html')
++        self.assertContains(response, 'Борщ')
++
++    def test_order_create_view(self):
++        """Test creating a new order"""
++        data = {
++            'table_number': '7',
++            'items[]': ['Пицца', 'Суп'],
++            'prices[]': ['550', '300']
++        }
++        response = self.client.post(reverse('order_create'), data)
++        self.assertEqual(response.status_code, 302)  # Redirect after success
++        self.assertEqual(Order.objects.count(), 2)
++        new_order = Order.objects.latest('id')
++        self.assertEqual(new_order.table_number, 7)
++        self.assertEqual(len(new_order.items), 2)
++
++    def test_order_update_view(self):
++        """Test updating an existing order"""
++        data = {
++            'table_number': '8',
++            'items[]': ['Новое блюдо'],
++            'prices[]': ['400'],
++            'status': 'ready'
++        }
++        response = self.client.post(
++            reverse('order_update', args=[self.order.id]), 
++            data
++        )
++        self.assertEqual(response.status_code, 302)
++        updated_order = Order.objects.get(id=self.order.id)
++        self.assertEqual(updated_order.table_number, 8)
++        self.assertEqual(updated_order.status, 'ready')
++
++    def test_order_delete_view(self):
++        """Test deleting an order"""
++        response = self.client.get(
++            reverse('order_delete', args=[self.order.id])
++        )
++        self.assertEqual(response.status_code, 302)
++        self.assertEqual(Order.objects.count(), 0)
++
++    def test_calculate_revenue_view(self):
++        """Test revenue calculation"""
++        # Create multiple orders with different statuses
++        paid_order1 = Order.objects.create(
++            table_number=10,
++            items=[{'name': 'Стейк', 'price': 1500}],
++            status='paid'
++        )
++        paid_order1.calculate_total()
++
++        paid_order2 = Order.objects.create(
++            table_number=11,
++            items=[{'name': 'Борщ', 'price': 350}, {'name': 'Десерт', 'price': 250}],
++            status='paid'
++        )
++        paid_order2.calculate_total()
++
++        # Create unpaid order that shouldn't be counted
++        pending_order = Order.objects.create(
++            table_number=12,
++            items=[{'name': 'Салат', 'price': 400}],
++            status='pending'
++        )
++        pending_order.calculate_total()
++
++        ready_order = Order.objects.create(
++            table_number=13,
++            items=[{'name': 'Пицца', 'price': 800}],
++            status='ready'
++        )
++        ready_order.calculate_total()
++
++        response = self.client.get(reverse('calculate_revenue'))
++        self.assertEqual(response.status_code, 200)
++        self.assertTemplateUsed(response, 'orders/revenue.html')
++        
++        # Total should be sum of only paid orders (1500 + 350 + 250 = 2100)
++        self.assertContains(response, '2100')
++        
++        # Verify that unpaid orders are not included
++        self.assertEqual(Order.objects.filter(status='paid').count(), 2)
++        total_revenue = Order.objects.filter(status='paid').aggregate(
++            total=models.Sum('total_price'))['total']
++        self.assertEqual(float(total_revenue), 2100.0)
++
++    def test_zero_revenue(self):
++        """Test revenue calculation when there are no paid orders"""
++        # Create only unpaid orders
++        Order.objects.create(
++            table_number=1,
++            items=[{'name': 'Салат', 'price': 400}],
++            status='pending'
++        ).calculate_total()
++
++        Order.objects.create(
++            table_number=2,
++            items=[{'name': 'Суп', 'price': 300}],
++            status='ready'
++        ).calculate_total()
++
++        response = self.client.get(reverse('calculate_revenue'))
++        self.assertEqual(response.status_code, 200)
++        self.assertTemplateUsed(response, 'orders/revenue.html')
++        self.assertContains(response, '0')  # Should show zero revenue
+diff --git a/orders/views.py b/orders/views.py
+index d5b09bd..a835795 100644
+--- a/orders/views.py
++++ b/orders/views.py
+@@ -1,36 +1,35 @@
++from typing import Any, Dict, List, Optional, Union
++from decimal import Decimal
++from django.http import HttpRequest, HttpResponse
++from django.shortcuts import render, redirect, get_object_or_404
++from django.db.models import Sum
+ from rest_framework import viewsets
+ from .serializers import OrderSerializer
+-from django.db.models import Sum
+-from django.shortcuts import get_object_or_404
+-from django.http import HttpResponse
+-from django.shortcuts import render, redirect
+-from django.shortcuts import render, get_object_or_404, redirect
+ from .models import Order
+-from django.db import models
+ 
+ 
+-def order_list(request):
+-    orders = Order.objects.all()
++def order_list(request: HttpRequest) -> HttpResponse:
++    orders: List[Order] = list(Order.objects.all())
+     return render(request, 'orders/order_list.html', {'orders': orders})
+ 
+ 
+-def order_create(request):
++def order_create(request: HttpRequest) -> HttpResponse:
+     if request.method == 'POST':
+         # Получаем данные из формы
+-        table_number = request.POST.get('table_number')
++        table_number: str = request.POST.get('table_number', '')
+         # Ожидаем список блюд в формате JSON
+-        items = request.POST.getlist('items[]')
+-        item_prices = request.POST.getlist('prices[]')  # Цены на блюда
++        items: List[str] = request.POST.getlist('items[]')
++        item_prices: List[str] = request.POST.getlist('prices[]')  # Цены на блюда
+ 
+         # Преобразуем данные в формат JSON
+-        formatted_items = [
++        formatted_items: List[Dict[str, Union[str, float]]] = [
+             {'name': name, 'price': float(price)}
+             for name, price in zip(items, item_prices)
+         ]
+ 
+         # Создаем заказ
+-        order = Order.objects.create(
+-            table_number=table_number,
++        order: Order = Order.objects.create(
++            table_number=int(table_number),
+             items=formatted_items
+         )
+         order.calculate_total()  # Рассчитываем общую стоимость заказа
+@@ -40,29 +39,30 @@ def order_create(request):
+     return render(request, 'orders/order_create.html')
+ 
+ 
+-def order_delete(request, order_id):
+-    order = get_object_or_404(Order, id=order_id)
++def order_delete(request: HttpRequest, order_id: int) -> HttpResponse:
++    order: Order = get_object_or_404(Order, id=order_id)
+     order.delete()
+     return redirect('order_list')
+ 
+ 
+-def order_update(request, order_id):
+-    order = get_object_or_404(Order, id=order_id)
++def order_update(request: HttpRequest, order_id: int) -> HttpResponse:
++    order: Order = get_object_or_404(Order, id=order_id)
+ 
+     if request.method == 'POST':
+         # Обновляем данные заказа
+-        order.table_number = request.POST.get('table_number')
+-        items = request.POST.getlist('items[]')
+-        item_prices = request.POST.getlist('prices[]')
++        table_number: str = request.POST.get('table_number', '')
++        items: List[str] = request.POST.getlist('items[]')
++        item_prices: List[str] = request.POST.getlist('prices[]')
+ 
+         # Преобразуем данные в формат JSON
+-        formatted_items = [
++        formatted_items: List[Dict[str, Union[str, float]]] = [
+             {'name': name, 'price': float(price)}
+             for name, price in zip(items, item_prices)
+         ]
++        order.table_number = int(table_number)
+         order.items = formatted_items
+         order.calculate_total()  # Пересчитываем общую стоимость
+-        order.status = request.POST.get('status')
++        order.status = request.POST.get('status', 'pending')
+         order.save()
+ 
+         return redirect('order_list')
+@@ -70,10 +70,10 @@ def order_update(request, order_id):
+     return render(request, 'orders/order_update.html', {'order': order})
+ 
+ 
+-def calculate_revenue(request):
++def calculate_revenue(request: HttpRequest) -> HttpResponse:
+     # Суммируем total_price для всех оплаченных заказов
+-    total_revenue = Order.objects.filter(status='paid').aggregate(
+-        total=Sum('total_price'))['total'] or 0
++    total_revenue: Optional[Decimal] = Order.objects.filter(status='paid').aggregate(
++        total=Sum('total_price'))['total'] or Decimal('0')
+ 
+     return render(request, 'orders/revenue.html', {'total_revenue': total_revenue})
+ 
+-- 
+2.39.5 (Apple Git-154)
+
+
+From a3e57d429116d0e9c0e043892fdcb3bc172ac102 Mon Sep 17 00:00:00 2001
+From: Victoria Karpova <v.karpova@nrc.nl>
+Date: Wed, 29 Jan 2025 18:37:45 +0100
+Subject: [PATCH 2/2] gitignore
+
+---
+ .gitignore | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/.gitignore b/.gitignore
+index 7f24310..0bd4c67 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -1,6 +1,7 @@
+ # Python
+  *.py[cod]
+  __pycache__/
++ */__pycache__/
+  *.so
+  .Python
+  env/
+-- 
+2.39.5 (Apple Git-154)
+

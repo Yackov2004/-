@@ -1,0 +1,33 @@
+diff a/orders/templates/orders/revenue.html b/orders/templates/orders/revenue.html	(rejected hunks)
+@@ -1,16 +1,25 @@
++{% load static %}
+ <!DOCTYPE html>
+ <html lang="en">
+-
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Выручка за смену</title>
++    <link rel="stylesheet" href="{% static 'orders/css/style.css' %}">
+ </head>
+-
+ <body>
+-    <h1>Выручка за смену</h1>
+-    <p>Общая сумма оплаченных заказов: <strong>{{ total_revenue }} ₽</strong></p>
+-    <a href="/">Вернуться к списку заказов</a>
+-</body>
++    <div class="container">
++        <nav class="nav">
++            <a href="{% url 'order_list' %}">Заказы</a>
++            <a href="{% url 'order_create' %}">Новый заказ</a>
++            <a href="{% url 'calculate_revenue' %}">Выручка</a>
++        </nav>
+ 
++        <div class="card revenue-card">
++            <h1>Выручка за смену</h1>
++            <div class="revenue-amount">{{ total_revenue }} ₽</div>
++            <a href="{% url 'order_list' %}" class="btn btn-primary">Вернуться к списку заказов</a>
++        </div>
++    </div>
++</body>
+ </html>

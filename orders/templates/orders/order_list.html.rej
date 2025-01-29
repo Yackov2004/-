@@ -1,0 +1,42 @@
+diff a/orders/templates/orders/order_list.html b/orders/templates/orders/order_list.html	(rejected hunks)
+@@ -16,8 +16,8 @@
+         </nav>
+ 
+         <div class="card">
+-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+-                <h1 style="margin: 0;">Список заказов</h1>
++            <div class="header-flex">
++                <h1>Список заказов</h1>
+                 <a href="{% url 'order_create' %}" class="btn btn-primary">+ Новый заказ</a>
+             </div>
+             
+@@ -39,23 +39,23 @@
+                             <td>#{{ order.id }}</td>
+                             <td>{{ order.table_number }}</td>
+                             <td>
+-                                <ul style="list-style: none; padding: 0; margin: 0;">
++                                <ul class="items-list">
+                                     {% for item in order.items %}
+-                                    <li style="margin-bottom: 4px;">
+-                                        <span style="font-weight: 500;">{{ item.name }}</span>
+-                                        <span style="color: #666;">{{ item.price }}₽</span>
++                                    <li class="item-entry">
++                                        <span class="item-name">{{ item.name }}</span>
++                                        <span class="item-price">{{ item.price }}₽</span>
+                                     </li>
+                                     {% endfor %}
+                                 </ul>
+                             </td>
+-                            <td style="font-weight: 500;">{{ order.total_price }}₽</td>
++                            <td class="price-cell">{{ order.total_price }}₽</td>
+                             <td>
+                                 <span class="status-badge status-{{ order.status }}">
+                                     {{ order.get_status_display }}
+                                 </span>
+                             </td>
+                             <td>
+-                                <div style="display: flex; gap: 8px;">
++                                <div class="action-buttons">
+                                     <a href="{% url 'order_update' order.id %}" class="btn btn-primary">Изменить</a>
+                                     <a href="{% url 'order_delete' order.id %}" class="btn btn-danger">Удалить</a>
+                                 </div>
